@@ -1,42 +1,106 @@
 import { Heading } from "../../components";
 import UserProfile from "../../components/UserProfile";
-import React, { Suspense } from "react";
+import React, { Suspense, useState } from "react";
+import * as Select from '@radix-ui/react-select';
 
 const profileList = [
-  { profileImage: "images/img_rectangle_276.png", userName: "Susan Von Firstenburg" },
-  { profileImage: "images/img_rectangle_276.png", userName: "Susan Von Firstenburg" },
-  { profileImage: "images/img_rectangle_276.png", userName: "Susan Von Firstenburg" },
-  { profileImage: "images/img_rectangle_276.png", userName: "Susan Von Firstenburg" },
+  { profileImage: "images/img_rectangle_276_1.png", userName: "Sanderson Smith" },
+  { profileImage: "images/img_rectangle_276_2.png", userName: "Elenora Winters" },
+  { profileImage: "images/img_rectangle_276_3.png", userName: "Diane Brestal" },
+  { profileImage: "images/img_rectangle_276_4.png", userName: "Tanya Evans" },
 ];
 
-export default function EventPlannerSection() {
+const plannerTypes = [
+  { value: 'wedding', label: 'Wedding Planner' },
+  { value: 'corporate', label: 'Corporate Event Planner' },
+  { value: 'party', label: 'Party Planner' },
+  { value: 'conference', label: 'Conference Planner' },
+  { value: 'social', label: 'Social Event Planner' },
+];
+
+const EventPlannerSection = ({ isEventPro }) => {
+  const [selectedType, setSelectedType] = useState('');
+  const [isOpen, setIsOpen] = useState(false);
+
+  if (!isEventPro) {
+    return null;
+  }
+
   return (
-    <>
-      {/* event planner section */}
-      <div className="flex flex-col items-center gap-[54px] self-stretch sm:gap-[27px]">
-        <div className="container-lg md:px-5">
-          <div className="flex justify-center px-14 md:px-5">
-            <div className="flex">
-              <Heading
-                size="heading4xl"
-                as="h3"
-                className="text-[40px] font-semibold tracking-[-1.60px] text-black-900_02 md:text-[38px] sm:text-[36px]"
-              >
-                <span className="text-black-900_02">Hire&nbsp;</span>
-                <span className="text-deep_orange-500">top event planners</span>
-                <span className="text-black-900_01">.</span>
-              </Heading>
-            </div>
-          </div>
+    <section className="w-full py-8 md:py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Section Header */}
+        <div className="text-center mb-12">
+          <Heading
+            size="heading4xl"
+            as="h3"
+            className="text-[40px] font-semibold tracking-[-1.60px] text-black-900_02 md:text-[38px] sm:text-[36px]"
+          >
+            <span className="text-black-900_02">Hire </span>
+            <span className="text-deep_orange-500">top event planners</span>
+            <span className="text-black-900_01">.</span>
+          </Heading>
         </div>
-        <div className="flex gap-12 self-stretch px-6 py-3 md:flex-col sm:px-5">
-          <Suspense fallback={<div>Loading feed...</div>}>
-            {profileList.map((d, index) => (
-              <UserProfile {...d} key={"servicesList" + index} />
+
+        {/* Event Planner Type Dropdown */}
+        <div className="max-w-md mx-auto mb-12">
+          <label className="block text-lg font-medium text-gray-900 mb-3">
+            What Type of Event Planner Do You Want?
+          </label>
+          <Select.Root 
+            value={selectedType} 
+            onValueChange={setSelectedType}
+            open={isOpen}
+            onOpenChange={setIsOpen}
+          >
+            <Select.Trigger 
+              className="flex items-center justify-between w-full px-4 py-3 bg-white border border-gray-300 rounded-lg shadow-sm hover:border-deep_orange-500 focus:outline-none focus:ring-2 focus:ring-deep_orange-500 focus:border-deep_orange-500"
+              aria-label="Event planner type"
+            >
+              <Select.Value placeholder="Select a planner type" />
+              <Select.Icon>{isOpen ? '▲' : '▼'}</Select.Icon>
+            </Select.Trigger>
+
+            <Select.Portal>
+              <Select.Content 
+                className="z-50 min-w-[200px] bg-white rounded-lg shadow-lg border border-gray-200 overflow-hidden"
+                position="popper"
+                sideOffset={5}
+              >
+                <Select.Viewport className="p-1">
+                  {plannerTypes.map((type) => (
+                    <Select.Item
+                      key={type.value}
+                      value={type.value}
+                      className="relative flex items-center px-4 py-2 text-gray-900 rounded cursor-pointer select-none hover:bg-deep_orange-50 focus:bg-deep_orange-50 focus:outline-none"
+                    >
+                      <Select.ItemText>{type.label}</Select.ItemText>
+                      <Select.ItemIndicator className="absolute right-2">
+                        ✓
+                      </Select.ItemIndicator>
+                    </Select.Item>
+                  ))}
+                </Select.Viewport>
+              </Select.Content>
+            </Select.Portal>
+          </Select.Root>
+        </div>
+
+        {/* Profile Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <Suspense fallback={<div className="text-center py-8">Loading profiles...</div>}>
+            {profileList.map((profile, index) => (
+              <UserProfile 
+                key={index}
+                {...profile}
+                className="w-full"
+              />
             ))}
           </Suspense>
         </div>
       </div>
-    </>
+    </section>
   );
-}
+};
+
+export default EventPlannerSection;

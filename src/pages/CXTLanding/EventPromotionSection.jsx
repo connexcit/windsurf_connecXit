@@ -24,7 +24,7 @@ export default function EventPromotionSection() {
             </Heading>
             <Text
               as="p"
-              className="w-[74%] text-[15px] font-normal leading-[144.7%] tracking-[-0.60px] text-gray-700 md:w-full"
+              className="w-[74%] text-[15px] font-normal leading-[144.7%] tracking-[-0.60px] text-gray-700_02 md:w-full"
             >
               ConnecXit is your one stop shop for all things events. ConnecXit brings together top event planners, the
               best event venues and all vendors that can aid it making your next event a success.

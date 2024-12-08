@@ -1,106 +1,252 @@
-import { Button, Img, Text, SelectBox, Heading } from "../../components";
-import React from "react";
+import { Button, Img, Text, Heading } from "../../components";
+import UserProfile from "../../components/UserProfile";
+import React, { useState, Suspense, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import Select from "react-select";
+import * as RadixSelect from '@radix-ui/react-select';
 
-const dropDownOptions = [
-  { label: "Option1", value: "option1" },
-  { label: "Option2", value: "option2" },
-  { label: "Option3", value: "option3" },
+const eventTimingOptions = [
+  { label: "This Week", value: "this_week" },
+  { label: "Next Week", value: "next_week" },
+  { label: "This Month", value: "this_month" },
+  { label: "Next Month", value: "next_month" },
+  { label: "Next 3 Months", value: "next_3_months" },
+  { label: "Next 6 Months", value: "next_6_months" },
 ];
 
-export default function EventPlanningSection() {
+const resourceOptions = [
+  { label: "Transportation", value: "transportation" },
+  { label: "Catering", value: "catering" },
+  { label: "Photography", value: "photography" },
+  { label: "Venues", value: "venues" },
+  { label: "DJ", value: "dj" },
+  { label: "Live Entertainment", value: "live_entertainment" },
+];
+
+const plannerTypes = [
+  { value: 'wedding', label: 'Wedding Planner' },
+  { value: 'corporate', label: 'Corporate Event Planner' },
+  { value: 'party', label: 'Party Planner' },
+  { value: 'conference', label: 'Conference Planner' },
+  { value: 'social', label: 'Social Event Planner' },
+];
+
+const profileList = [
+  { profileImage: "images/img_rectangle_276_1.png", userName: "Sanderson Smith" },
+  { profileImage: "images/img_rectangle_276_2.png", userName: "Elenora Winters" },
+  { profileImage: "images/img_rectangle_276_3.png", userName: "Diane Brestal" },
+  { profileImage: "images/img_rectangle_276_4.png", userName: "Tanya Evans" },
+];
+
+const customStyles = {
+  control: (base) => ({
+    ...base,
+    border: 'none',
+    borderBottom: '1px solid #E6E6E6',
+    borderRadius: '0',
+    boxShadow: 'none',
+    minHeight: '42px',
+    '&:hover': {
+      borderBottom: '1px solid #E6E6E6'
+    }
+  }),
+  placeholder: (base) => ({
+    ...base,
+    color: '#000000',
+    fontSize: '15px',
+    letterSpacing: '-0.60px'
+  }),
+  multiValue: (base) => ({
+    ...base,
+    backgroundColor: '#F0F0F0',
+    borderRadius: '4px'
+  })
+};
+
+export default function EventPlanningSection({ isEventPro, setIsEventPro }) {
+  const navigate = useNavigate();
+  const [selectedTiming, setSelectedTiming] = useState(null);
+  const [selectedResources, setSelectedResources] = useState([]);
+  const [zipCode, setZipCode] = useState("");
+  const [selectedPlannerType, setSelectedPlannerType] = useState('');
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  // Reset fields when toggle changes
+  useEffect(() => {
+    setSelectedResources([]);
+    setSelectedPlannerType('');
+  }, [isEventPro]);
+
+  const handleSearchClick = () => {
+    navigate('/cxtlistpage');
+  };
+
+  const handleZipCodeChange = (e) => {
+    const value = e.target.value.replace(/\D/g, '').slice(0, 5);
+    setZipCode(value);
+  };
+
   return (
-    <>
-      {/* event planning section */}
-      <div className="flex flex-col items-center">
-        <div className="container-lg flex flex-col items-center gap-[60px] px-14 md:px-5 sm:gap-[30px]">
-          <Heading
-            size="heading5xl"
-            as="h1"
-            className="w-[64%] text-center text-[60px] font-bold leading-[114.7%] tracking-[-2.40px] text-black-900_02 md:w-full md:text-[52px] sm:text-[46px]"
-          >
-            <span className="text-black-900_02">Event</span>
-            <span className="text-black-900_02">&nbsp;</span>
-            <span className="text-deep_orange-500">planning</span>
-            <span className="text-black-900_02">, made&nbsp;</span>
-            <span className="text-black-900_02">made&nbsp;</span>
-            <span className="text-black-900_02">eas</span>
-            <span className="text-black-900_02">ier</span>
-            <span className="text-black-900_02">.</span>
-          </Heading>
-          <div className="flex w-[72%] flex-col gap-[58px] md:w-full sm:gap-[29px]">
-            <div className="mx-[94px] flex items-center gap-6 md:mx-0 md:flex-col">
-              <div className="flex w-full justify-center px-14 md:px-5">
-                <Heading
-                  size="headinglg"
-                  as="h2"
-                  className="text-[16px] font-semibold tracking-[-0.64px] text-green-800"
-                >
-                  <span className="text-gray-700_02">HIRE an</span>
-                  <span className="text-green-800">&nbsp;</span>
-                  <span className="text-deep_orange-500">EVENT</span>
-                  <span className="text-green-800">&nbsp;</span>
-                  <span className="text-deep_orange-500">PRO</span>
-                </Heading>
-              </div>
-              <div className="w-full px-1.5">
-                <div className="flex">
-                  <Heading
-                    size="headinglg"
-                    as="h3"
-                    className="text-[16px] font-semibold tracking-[-0.64px] text-gray-700_02"
+    <section className="w-full max-w-[1200px] mx-auto px-4 md:px-6">
+      <div className="flex flex-col items-center space-y-8 md:space-y-12">
+        {/* Heading */}
+        <Heading
+          size="heading5xl"
+          as="h1"
+          className="max-w-3xl text-center text-[36px] md:text-[48px] lg:text-[60px] font-bold leading-[1.2] tracking-[-2.40px] text-black-900_02"
+        >
+          <span className="text-black-900_02">Event </span>
+          <span className="text-deep_orange-500">planning</span>
+          <span className="text-black-900_02">, made easier.</span>
+        </Heading>
+
+        {/* Type Selector */}
+        <div className="flex justify-center mb-6">
+          <div className="inline-flex rounded-lg p-1 bg-gray-100">
+            <Button
+              className={`px-6 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 ease-in-out ${
+                isEventPro
+                  ? 'bg-deep_orange-500 text-white shadow-md'
+                  : 'text-gray-700_02 hover:bg-gray-200'
+              }`}
+              onClick={() => setIsEventPro(true)}
+            >
+              HIRE an EVENT PRO
+            </Button>
+            <Button
+              className={`px-6 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 ease-in-out ${
+                !isEventPro
+                  ? 'bg-deep_orange-500 text-white shadow-md'
+                  : 'text-gray-700_02 hover:bg-gray-200'
+              }`}
+              onClick={() => setIsEventPro(false)}
+            >
+              FIND EVENT VENDORS
+            </Button>
+          </div>
+        </div>
+
+        {/* Search Container */}
+        <div className="w-full max-w-3xl">
+          {/* Search Fields */}
+          <div className="flex flex-col md:flex-row gap-4 p-4 rounded-[22px] border border-solid border-gray-300_01">
+            {/* Event Date, Resources & Planner Type */}
+            <div className="flex-1 space-y-4">
+              <Select
+                value={selectedTiming}
+                onChange={setSelectedTiming}
+                options={eventTimingOptions}
+                placeholder="When is your event?"
+                styles={customStyles}
+                className="mb-4"
+              />
+              
+              {/* Event Planner Type Dropdown - Only show when isEventPro is true */}
+              {isEventPro ? (
+                <div className="space-y-2">
+                  <label className="block text-sm font-medium text-gray-900">
+                    What Type of Event Planner Do You Need?
+                  </label>
+                  <RadixSelect.Root 
+                    value={selectedPlannerType} 
+                    onValueChange={setSelectedPlannerType}
+                    open={isDropdownOpen}
+                    onOpenChange={setIsDropdownOpen}
                   >
-                    <span className="text-gray-700_02">FIND</span>
-                    <span className="text-gray-700_02">&nbsp;</span>
-                    <span className="text-deep_orange-500">EVENT</span>
-                    <span className="text-gray-700_02">&nbsp;</span>
-                    <span className="text-deep_orange-500">VENDORS</span>
-                  </Heading>
+                    <RadixSelect.Trigger 
+                      className="flex items-center justify-between w-full px-0 py-2 border-b border-gray-300 hover:border-deep_orange-500 focus:outline-none"
+                      aria-label="Event planner type"
+                    >
+                      <RadixSelect.Value placeholder="Select an event planner type" />
+                      <RadixSelect.Icon>{isDropdownOpen ? '▲' : '▼'}</RadixSelect.Icon>
+                    </RadixSelect.Trigger>
+
+                    <RadixSelect.Portal>
+                      <RadixSelect.Content 
+                        className="z-50 min-w-[200px] bg-white rounded-lg shadow-lg border border-gray-200 overflow-hidden"
+                        position="popper"
+                        sideOffset={5}
+                      >
+                        <RadixSelect.Viewport className="p-1">
+                          {plannerTypes.map((type) => (
+                            <RadixSelect.Item
+                              key={type.value}
+                              value={type.value}
+                              className="relative flex items-center px-4 py-2 text-gray-900 rounded cursor-pointer select-none hover:bg-deep_orange-50 focus:bg-deep_orange-50 focus:outline-none"
+                            >
+                              <RadixSelect.ItemText>{type.label}</RadixSelect.ItemText>
+                              <RadixSelect.ItemIndicator className="absolute right-2">
+                                ✓
+                              </RadixSelect.ItemIndicator>
+                            </RadixSelect.Item>
+                          ))}
+                        </RadixSelect.Viewport>
+                      </RadixSelect.Content>
+                    </RadixSelect.Portal>
+                  </RadixSelect.Root>
                 </div>
-              </div>
+              ) : (
+                /* Resources Multi-select - Only show when isEventPro is false */
+                <Select
+                  isMulti
+                  value={selectedResources}
+                  onChange={setSelectedResources}
+                  options={resourceOptions}
+                  placeholder="What do you need?"
+                  styles={customStyles}
+                />
+              )}
             </div>
-            <div className="flex rounded-[22px] border border-solid border-gray-300_01 px-3 md:flex-col">
-              <div className="flex flex-1 items-center gap-7 px-3 md:self-stretch sm:flex-col">
-                <SelectBox
-                  shape="square"
-                  indicator={
-                    <Img src="images/img_arrowdown_black_900_02.svg" alt="Arrow Down" className="h-[6px] w-[8px]" />
-                  }
-                  name="Event Date Dropdown"
-                  placeholder={`When is your event?`}
-                  options={dropDownOptions}
-                  className="w-[42%] gap-2.5 !border-b tracking-[-0.60px] sm:w-full"
-                />
-                <SelectBox
-                  size="xs"
-                  shape="square"
-                  indicator={
-                    <Img src="images/img_arrowdown_black_900_02.svg" alt="Arrow Down" className="h-[6px] w-[8px]" />
-                  }
-                  name="Resources Dropdown"
-                  placeholder={`What resources do you need?`}
-                  options={dropDownOptions}
-                  className="mb-2 flex-grow gap-3 self-end tracking-[-0.60px] text-black-900_01 sm:self-auto"
+
+            {/* Zip Code & Search Button */}
+            <div className="flex flex-col md:flex-row md:items-end gap-4">
+              <div className="flex-shrink-0">
+                <input
+                  type="text"
+                  value={zipCode}
+                  onChange={handleZipCodeChange}
+                  placeholder="Enter ZIP code"
+                  className="w-full md:w-[120px] px-3 py-2 border-b border-gray-300 focus:border-deep_orange-500 focus:outline-none"
                 />
               </div>
-              <div className="flex w-[34%] items-center justify-center md:w-full">
-                <div className="flex flex-1 items-center px-[30px] sm:px-5">
-                  <div className="h-[44px] w-px bg-gray-300_01" />
-                  <Img src="images/img_linkedin.svg" alt="Linkedin Image" className="ml-2 h-[20px]" />
-                  <Text
-                    as="p"
-                    className="mb-2 ml-2 self-end text-[15px] font-normal tracking-[-0.60px] text-black-900_01"
-                  >
-                    Zip code
-                  </Text>
-                </div>
-                <Button size="xl" shape="circle" className="w-[40px] self-end rounded-[20px] px-3">
-                  <Img src="images/img_search.svg" />
-                </Button>
-              </div>
+              <Button
+                className="bg-deep_orange-500 hover:bg-deep_orange-600 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200"
+                onClick={handleSearchClick}
+              >
+                Search
+              </Button>
             </div>
           </div>
         </div>
+
+        {/* Event Planner Profiles - Only show when isEventPro is true */}
+        {isEventPro && (
+          <div className="w-full mt-12">
+            <div className="text-center mb-8">
+              <Heading
+                size="heading4xl"
+                as="h3"
+                className="text-[40px] font-semibold tracking-[-1.60px] text-black-900_02 md:text-[38px] sm:text-[36px]"
+              >
+                <span className="text-black-900_02">Hire </span>
+                <span className="text-deep_orange-500">top event planners</span>
+                <span className="text-black-900_01">.</span>
+              </Heading>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+              <Suspense fallback={<div className="text-center py-8">Loading profiles...</div>}>
+                {profileList.map((profile, index) => (
+                  <UserProfile 
+                    key={index}
+                    {...profile}
+                    className="w-full"
+                  />
+                ))}
+              </Suspense>
+            </div>
+          </div>
+        )}
       </div>
-    </>
+    </section>
   );
 }
