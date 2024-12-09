@@ -32,26 +32,46 @@ export default function CXTSignUpPage() {
                   <Text as="p" className="text-[15px] font-normal tracking-[-0.60px] text-black-900_02">
                     First Name
                   </Text>
-                  <Input shape="square" name="First Name Input" className="self-stretch !border px-3.5" />
+                  <Input 
+                    shape="square" 
+                    size="md"
+                    name="First Name Input" 
+                    className="w-full h-[36px] !border" 
+                  />
                 </div>
                 <div className="flex w-full flex-col items-start gap-0.5 sm:w-full">
                   <Text as="p" className="text-[15px] font-normal tracking-[-0.60px] text-black-900_02">
                     Last Name
                   </Text>
-                  <Input shape="square" name="Last Name Input" className="self-stretch !border px-3.5" />
+                  <Input 
+                    shape="square" 
+                    size="md"
+                    name="Last Name Input" 
+                    className="w-full h-[36px] !border" 
+                  />
                 </div>
               </div>
               <div className="mr-1.5 mt-6 flex flex-col items-start gap-1 self-stretch md:mr-0">
                 <Text as="p" className="text-[15px] font-normal tracking-[-0.60px] text-black-900_02">
                   Email
                 </Text>
-                <Input shape="square" name="Email Input" className="self-stretch !border px-3.5" />
+                <Input 
+                  shape="square" 
+                  size="md"
+                  name="Email Input" 
+                  className="w-full h-[36px] !border" 
+                />
               </div>
               <div className="mr-1.5 mt-6 flex flex-col items-start gap-1 self-stretch md:mr-0">
                 <Text as="p" className="text-[15px] font-normal tracking-[-0.60px] text-black-900_02">
                   Password
                 </Text>
-                <Input shape="square" name="Password Input" className="self-stretch !border px-3.5" />
+                <Input 
+                  shape="square" 
+                  size="md"
+                  name="Password Input" 
+                  className="w-full h-[36px] !border" 
+                />
               </div>
               <Text size="textlg" as="p" className="mt-3.5 text-[14px] font-normal tracking-[-0.56px] text-gray-500_03">
                 Your password must:
