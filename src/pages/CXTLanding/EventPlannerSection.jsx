@@ -63,16 +63,16 @@ const EventPlannerSection = ({ isEventPro }) => {
 
             <Select.Portal>
               <Select.Content 
-                className="z-50 min-w-[200px] bg-white rounded-lg shadow-lg border border-gray-200 overflow-hidden"
+                className="z-50 min-w-[200px]"
                 position="popper"
                 sideOffset={5}
               >
-                <Select.Viewport className="p-1">
+                <Select.Viewport>
                   {plannerTypes.map((type) => (
                     <Select.Item
                       key={type.value}
                       value={type.value}
-                      className="relative flex items-center px-4 py-2 text-gray-900 rounded cursor-pointer select-none hover:bg-deep_orange-50 focus:bg-deep_orange-50 focus:outline-none"
+                      className="relative flex items-center text-gray-900"
                     >
                       <Select.ItemText>{type.label}</Select.ItemText>
                       <Select.ItemIndicator className="absolute right-2">

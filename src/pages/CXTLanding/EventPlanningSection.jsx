@@ -106,8 +106,8 @@ export default function EventPlanningSection({ isEventPro, setIsEventPro }) {
             <Button
               className={`px-6 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 ease-in-out ${
                 isEventPro
-                  ? 'bg-deep_orange-500 text-white shadow-md'
-                  : 'text-gray-700_02 hover:bg-gray-200'
+                  ? 'bg-deep_orange-500 text-white shadow-md hover:bg-deep_orange-600'
+                  : 'bg-gray-200 text-gray-700_02 hover:bg-gray-300'
               }`}
               onClick={() => setIsEventPro(true)}
             >
@@ -116,8 +116,8 @@ export default function EventPlanningSection({ isEventPro, setIsEventPro }) {
             <Button
               className={`px-6 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 ease-in-out ${
                 !isEventPro
-                  ? 'bg-deep_orange-500 text-white shadow-md'
-                  : 'text-gray-700_02 hover:bg-gray-200'
+                  ? 'bg-deep_orange-500 text-white shadow-md hover:bg-deep_orange-600'
+                  : 'bg-gray-200 text-gray-700_02 hover:bg-gray-300'
               }`}
               onClick={() => setIsEventPro(false)}
             >

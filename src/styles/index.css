@@ -35,3 +35,26 @@ input:focus {
 .alice-carousel__dots-item {
   cursor: pointer;
 }
+
+/* Radix Select Styles */
+[data-radix-select-content] {
+  background-color: white !important;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+[data-radix-select-viewport] {
+  background-color: white !important;
+  padding: 4px;
+}
+
+[data-radix-select-item] {
+  background-color: white !important;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+[data-radix-select-item]:hover,
+[data-radix-select-item][data-highlighted] {
+  background-color: #fff7ed !important;
+}

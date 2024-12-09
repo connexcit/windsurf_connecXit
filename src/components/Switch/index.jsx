@@ -1,15 +1,12 @@
 import React from "react";
-
-import SwitchProvider from "@dhiwise/react-switch";
+import * as RadixSwitch from "@radix-ui/react-switch";
 import PropTypes from "prop-types";
 
 const variants = {
   swtFillBluegray100: {
-    offColor: "#cdcdcd",
-    onColor: "#108a00",
-    offHandleColor: "#ffffff",
-    onHandleColor: "#ffffff",
-  },
+    root: "relative w-11 h-[22px] bg-[#cdcdcd] rounded-full outline-none cursor-default data-[state=checked]:bg-[#108a00]",
+    thumb: "block w-[18px] h-[18px] bg-white rounded-full transition-transform duration-100 translate-x-0.5 will-change-transform data-[state=checked]:translate-x-[22px]"
+  }
 };
 const sizes = {
   xs: {
@@ -20,28 +17,33 @@ const sizes = {
 
 const Switch = ({
   value = false,
-  className,
+  className = "",
   checkedIcon = <></>,
   uncheckedIcon = <></>,
   onChange,
   variant = "swtFillBluegray100",
   size = "xs",
 }) => {
-  const [selected, setSelected] = React.useState(value);
-  const handleChange = (val) => {
-    setSelected(val);
-    onChange?.(val);
+  const [checked, setChecked] = React.useState(value);
+
+  const handleCheckedChange = (checked) => {
+    setChecked(checked);
+    if (onChange) {
+      onChange(checked);
+    }
   };
+
+  const styles = variants[variant] || variants.swtFillBluegray100;
+
   return (
     <div className={className}>
-      <SwitchProvider
-        checked={selected}
-        onChange={handleChange}
-        {...variants[variant]}
-        {...sizes[size]}
-        checkedIcon={checkedIcon}
-        uncheckedIcon={uncheckedIcon}
-      />
+      <RadixSwitch.Root
+        checked={checked}
+        onCheckedChange={handleCheckedChange}
+        className={`${styles.root}`}
+      >
+        <RadixSwitch.Thumb className={styles.thumb} />
+      </RadixSwitch.Root>
     </div>
   );
 };
