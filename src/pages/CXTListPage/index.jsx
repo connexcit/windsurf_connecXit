@@ -28,6 +28,15 @@ export default function CXTListPagePage() {
                   <Text className="font-semibold mb-4">Filters</Text>
                   <div className="space-y-4">
                     <div>
+                      <Text className="text-sm font-medium mb-2">Vendor Type</Text>
+                      <div className="flex items-center space-x-2 bg-orange-50 p-2 rounded">
+                        <Text className="text-sm text-orange-600">Chefs</Text>
+                        <svg className="w-4 h-4 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                      </div>
+                    </div>
+                    <div>
                       <Text className="text-sm font-medium mb-2">Location</Text>
                       <Text className="text-sm text-gray-600">Raleigh, NC</Text>
                     </div>
