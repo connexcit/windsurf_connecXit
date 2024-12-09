@@ -188,11 +188,12 @@ export default function EventPlanningSection({ isEventPro, setIsEventPro }) {
               ) : (
                 /* Resources Multi-select - Only show when isEventPro is false */
                 <Select
+                  className="flex flex-col gap-1.5 self-stretch"
+                  placeholder="What type of vendors do you need (you can choose more than one)"
                   isMulti
                   value={selectedResources}
                   onChange={setSelectedResources}
                   options={resourceOptions}
-                  placeholder="What do you need?"
                   styles={customStyles}
                 />
               )}
