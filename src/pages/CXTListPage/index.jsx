@@ -13,114 +13,122 @@ export default function CXTListPagePage() {
           content="Discover professional chefs matching your criteria on ConnecXit. View profiles, starting prices, and read customer testimonials to find the perfect chef for your event."
         />
       </Helmet>
-      <div className="flex flex-col bg-white-a700">
+      <div className="flex flex-col bg-gray-50 min-h-screen">
         <Header6 className="w-full" />
-        <div className="flex flex-col items-center justify-start w-full">
+        <div className="container mx-auto px-4 py-8">
           <div className="flex flex-col items-center justify-start w-full">
-            <Heading
-              size="heading2xl"
-              as="h1"
-              className="mt-[62px] text-[20px] font-semibold tracking-[-0.80px] text-black-900_01"
-            >
-              Chefs that matched your search criteria...
-            </Heading>
+            <div className="bg-blue-50 w-full p-4 mb-6 rounded-lg">
+              <Text className="text-blue-800 text-center">Responds quickly</Text>
+            </div>
             
-            <div className="flex w-full max-w-[1282px] flex-row items-start justify-between gap-8 mt-8 px-4">
+            <div className="flex w-full gap-8">
               {/* Filters Section */}
-              <div className="flex flex-col items-start w-[250px] bg-white-a700 p-4 rounded-lg">
-                <Text as="p" className="text-[15px] font-medium tracking-[-0.60px] text-black-900_02">
-                  Filters
-                </Text>
-                <Text as="p" className="mt-[26px] text-[15px] font-medium tracking-[-0.60px] text-green-800">
-                  When can you start?
-                </Text>
-                <Text
-                  size="textmd"
-                  as="p"
-                  className="mt-[22px] text-[13px] font-normal tracking-[-0.52px] text-gray-700_03"
-                >
-                  Within 48 hours
-                </Text>
-                <Text as="p" className="mt-[26px] text-[15px] font-medium tracking-[-0.60px] text-black-900_02">
-                  Search
-                </Text>
-                <Text as="p" className="mt-3 text-[15px] font-medium tracking-[-0.60px] text-black-900_02">
-                  Billing
-                </Text>
+              <div className="w-64 flex-shrink-0">
+                <div className="bg-white rounded-lg p-6 shadow-sm">
+                  <Text className="font-semibold mb-4">Filters</Text>
+                  <div className="space-y-4">
+                    <div>
+                      <Text className="text-sm font-medium mb-2">Location</Text>
+                      <Text className="text-sm text-gray-600">Raleigh, NC</Text>
+                    </div>
+                    <div>
+                      <Text className="text-sm font-medium mb-2">Response Time</Text>
+                      <Text className="text-sm text-gray-600">Within 48 hours</Text>
+                    </div>
+                    <div>
+                      <Text className="text-sm font-medium mb-2">Price Range</Text>
+                      <Text className="text-sm text-gray-600">$30 - $200</Text>
+                    </div>
+                  </div>
+                </div>
               </div>
 
               {/* Results Section */}
-              <div className="flex-1">
-                <div className="flex flex-col gap-6">
-                  {/* Chef Card */}
-                  <div className="flex flex-col bg-white-a700 rounded-lg p-6 shadow-md">
-                    <div className="flex flex-row items-start gap-8">
-                      <div className="w-[126px] h-[126px] rounded-full overflow-hidden bg-white-a700">
-                        <Img
-                          src="images/img_rectangle_355.png"
-                          alt="Chef Nico"
-                          className="w-full h-full object-cover"
-                        />
+              <div className="flex-1 space-y-4">
+                {/* Chef Card 1 */}
+                <div className="bg-white rounded-lg p-6 shadow-sm">
+                  <div className="flex gap-6">
+                    <div className="w-24 h-24">
+                      <Img
+                        src="images/img_rectangle_355.png"
+                        alt="Chef profile"
+                        className="w-full h-full rounded-full object-cover"
+                      />
+                    </div>
+                    
+                    <div className="flex-1">
+                      <div className="flex justify-between items-start">
+                        <div>
+                          <Heading as="h2" className="text-xl font-semibold">
+                            Chef Nico
+                          </Heading>
+                          <div className="flex items-center mt-1">
+                            <Text className="text-green-600 font-medium">Exceptional 5.0</Text>
+                            <Text className="text-gray-600 ml-1">(6)</Text>
+                          </div>
+                          <div className="mt-2 space-y-1">
+                            <Text className="text-gray-600 text-sm">15 hires on ConnecXit</Text>
+                            <Text className="text-gray-600 text-sm">4 similar jobs done near you</Text>
+                            <Text className="text-gray-600 text-sm">Responds in about 11 min</Text>
+                          </div>
+                        </div>
+                        <div className="text-right">
+                          <Text className="text-xl font-semibold">$132</Text>
+                          <Text className="text-gray-600 text-sm">starting price</Text>
+                        </div>
                       </div>
-                      
-                      <div className="flex-1">
-                        <div className="flex flex-row items-start justify-between">
-                          <div>
-                            <Heading
-                              size="headingmd"
-                              as="h2"
-                              className="text-[15px] font-bold tracking-[-0.60px] text-black-900_02"
-                            >
-                              CHEF NICO
-                            </Heading>
-                            <div className="mt-2">
-                              <Text
-                                size="texts"
-                                as="p"
-                                className="text-[12px] font-normal tracking-[-0.48px] text-black-900_02"
-                              >
-                                324 hires on ConnecXit
-                              </Text>
-                              <Text
-                                size="texts"
-                                as="p"
-                                className="text-[12px] font-normal tracking-[-0.48px] text-black-900_02"
-                              >
-                                Responds within a day
-                              </Text>
-                            </div>
-                          </div>
-                          <div className="flex flex-col items-end">
-                            <Text as="p" className="text-[15px] font-normal tracking-[-0.60px] text-black-900_02">
-                              $30/person
-                            </Text>
-                            <Text
-                              size="textxs"
-                              as="p"
-                              className="text-[10px] font-normal tracking-[-0.40px] text-gray-700_03"
-                            >
-                              starting price
-                            </Text>
-                          </div>
-                        </div>
-                        
-                        <Text
-                          size="textmd"
-                          as="p"
-                          className="mt-4 text-[13px] font-normal leading-[146.7%] tracking-[-0.52px] text-black-900_02"
-                        >
-                          Hannah H. Says "I hired Chef Nico to cook for a bachelorette party. He helped me to make a
-                          custom menu that would best fit our needs."
+                      <div className="mt-4">
+                        <Text className="text-gray-800">
+                          "Chef Nico did an amazing job with our dinner party. The food was exceptional and the service was outstanding..."
                         </Text>
-                        
-                        <div className="mt-4 flex justify-end">
-                          <Button 
-                            className="min-w-[116px] rounded-[16px] px-[18px] tracking-[-0.60px] bg-deep_orange-500 text-white-a700"
-                            color="deep_orange_500"
-                          >
-                            View Profile
-                          </Button>
+                        <Button
+                          className="mt-4 bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600"
+                        >
+                          View Profile
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Chef Card 2 */}
+                <div className="bg-white rounded-lg p-6 shadow-sm">
+                  <div className="flex gap-6">
+                    <div className="w-24 h-24">
+                      <Img
+                        src="images/img_rectangle_356.png"
+                        alt="Chef profile"
+                        className="w-full h-full rounded-full object-cover"
+                      />
+                    </div>
+                    
+                    <div className="flex-1">
+                      <div className="flex justify-between items-start">
+                        <div>
+                          <Heading as="h2" className="text-xl font-semibold">
+                            Triangle Cleaning
+                          </Heading>
+                          <div className="flex items-center mt-1">
+                            <Text className="text-green-600 font-medium">Great 4.8</Text>
+                            <Text className="text-gray-600 ml-1">(10)</Text>
+                          </div>
+                          <div className="mt-2 space-y-1">
+                            <Text className="text-gray-600 text-sm">18 hires on ConnecXit</Text>
+                            <Text className="text-gray-600 text-sm">Serves Raleigh, NC</Text>
+                            <Text className="text-gray-600 text-sm">Responds in about 2 hours</Text>
+                          </div>
                         </div>
+                        <div className="text-right">
+                          <Text className="text-xl font-semibold">$77</Text>
+                          <Text className="text-gray-600 text-sm">starting price</Text>
+                        </div>
+                      </div>
+                      <div className="mt-4">
+                        <Button
+                          className="mt-4 bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600"
+                        >
+                          View Profile
+                        </Button>
                       </div>
                     </div>
                   </div>
@@ -129,49 +137,6 @@ export default function CXTListPagePage() {
             </div>
           </div>
         </div>
-
-        {/* Footer */}
-        <footer className="bg-black-900 mt-[90px] w-full">
-          <div className="flex flex-col items-center justify-center max-w-[1282px] mx-auto p-[30px] sm:p-5">
-            <Img
-              src="images/img_connecxit_logo.png"
-              alt="ConnecXit Logo"
-              className="h-[150px] w-auto object-contain mb-[82px]"
-            />
-            <div className="flex flex-row items-start justify-between w-full gap-5 md:flex-col">
-              <div className="flex flex-col items-start gap-1">
-                <Heading as="h6" className="text-[18px] font-semibold text-white-a700">
-                  About Us
-                </Heading>
-                <ul className="flex flex-col items-start gap-2">
-                  <li><a href="#" className="text-[15px] font-normal text-white-a700">Company</a></li>
-                  <li><a href="#" className="text-[15px] font-normal text-white-a700">Careers</a></li>
-                  <li><a href="#" className="text-[15px] font-normal text-white-a700">News</a></li>
-                </ul>
-              </div>
-              <div className="flex flex-col items-start gap-1">
-                <Heading as="h6" className="text-[18px] font-semibold text-white-a700">
-                  Support
-                </Heading>
-                <ul className="flex flex-col items-start gap-2">
-                  <li><a href="#" className="text-[15px] font-normal text-white-a700">Contact Us</a></li>
-                  <li><a href="#" className="text-[15px] font-normal text-white-a700">Knowledge Base</a></li>
-                  <li><a href="#" className="text-[15px] font-normal text-white-a700">Product Help Center</a></li>
-                </ul>
-              </div>
-              <div className="flex flex-col items-start gap-1">
-                <Heading as="h6" className="text-[18px] font-semibold text-white-a700">
-                  Become a Partner
-                </Heading>
-                <ul className="flex flex-col items-start gap-2">
-                  <li><a href="#" className="text-[15px] font-normal text-white-a700">For Chefs</a></li>
-                  <li><a href="#" className="text-[15px] font-normal text-white-a700">For Event Planners</a></li>
-                  <li><a href="#" className="text-[15px] font-normal text-white-a700">For Vendors</a></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </footer>
       </div>
     </>
   );
