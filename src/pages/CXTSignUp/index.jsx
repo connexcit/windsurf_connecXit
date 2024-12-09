@@ -121,41 +121,39 @@ export default function CXTSignUpPage() {
                 <div className="ml-6 h-px flex-1 bg-gray-500_02 sm:ml-0 sm:self-stretch" />
               </div>
               <div className="mt-7 self-stretch">
-                <div className="flex flex-col gap-3.5">
-                  <div className="relative h-[94px] content-center md:h-auto">
-                    <div className="mx-auto flex-1">
-                      <div className="relative z-[1] flex flex-col">
-                        <Text
-                          size="textlg"
-                          as="p"
-                          className="text-[14px] font-normal leading-[144.7%] tracking-[-0.56px] text-gray-800"
-                        >
-                          <span className="text-gray-800">By clicking Sign up with Facebook or Sign up with</span>
-                          <span className="text-green-800">&nbsp;</span>
-                          <span className="text-deep_orange-500">Google</span>
-                          <span className="text-gray-800">&nbsp;you agree to the &nbsp;</span>
-                          <span className="text-deep_orange-500">Terms of Use</span>
-                          <span className="text-green-800">&nbsp;</span>
-                          <span className="text-gray-800">and</span>
-                          <span className="text-green-800">&nbsp;</span>
-                          <span className="text-deep_orange-500">Privacy Policy.</span>
-                        </Text>
-                        <Img
-                          src="images/img_facebook_svgrepo_com.svg"
-                          alt="Facebook Logo"
-                          className="relative ml-40 mt-[-14px] h-[16px] w-[16px] md:ml-0"
-                        />
-                      </div>
-                      <div className="relative mr-3.5 mt-[-26px] h-[36px] border border-solid border-gray-500 md:mr-0" />
-                    </div>
+                <div className="flex flex-col gap-5">
+                  <div className="flex flex-col gap-3">
                     <Text
                       size="textlg"
                       as="p"
-                      className="absolute bottom-[6.93px] right-[31%] z-[2] m-auto text-[14px] font-normal tracking-[-0.56px] text-gray-800"
+                      className="text-[14px] font-normal leading-[144.7%] tracking-[-0.56px] text-gray-800 mb-4"
+                    >
+                      <span className="text-gray-800">By clicking Sign up with Facebook or Sign up with </span>
+                      <span className="text-deep_orange-500">Google</span>
+                      <span className="text-gray-800"> you agree to the </span>
+                      <span className="text-deep_orange-500">Terms of Use</span>
+                      <span className="text-gray-800"> and </span>
+                      <span className="text-deep_orange-500">Privacy Policy.</span>
+                    </Text>
+                    
+                    <Button
+                      color="gray_500"
+                      size="lg"
+                      variant="outline"
+                      shape="square"
+                      leftIcon={
+                        <Img
+                          src="images/img_facebook_svgrepo_com.svg"
+                          alt="Facebook Logo"
+                          className="h-[16px] w-[16px]"
+                        />
+                      }
+                      className="gap-3 self-stretch !border px-[33px] tracking-[-0.56px] sm:px-5"
                     >
                       Sign up with Facebook
-                    </Text>
+                    </Button>
                   </div>
+
                   <Button
                     color="gray_500"
                     size="lg"
@@ -168,7 +166,7 @@ export default function CXTSignUpPage() {
                         className="mb-1 h-[14px] w-[14px]"
                       />
                     }
-                    className="mr-3.5 gap-3 self-stretch !border px-[33px] tracking-[-0.56px] md:mr-0 sm:px-5"
+                    className="gap-3 self-stretch !border px-[33px] tracking-[-0.56px] sm:px-5"
                   >
                     Sign up with Google
                   </Button>
