@@ -26,7 +26,8 @@ ul {
 input {
   background-color: transparent;
   width: 100%;
-  color: black;
+  color: black !important;
+  caret-color: black !important;
 }
 
 input:focus {
@@ -35,24 +36,25 @@ input:focus {
   color: black !important;
 }
 
-/* Remove blue highlight on WebKit browsers */
+/* Override selection color */
+*::selection {
+  background-color: white !important;
+  color: black !important;
+}
+
+*::-moz-selection {
+  background-color: white !important;
+  color: black !important;
+}
+
+/* Override autofill styles */
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
-  -webkit-box-shadow: 0 0 0 30px white inset !important;
+  transition: background-color 5000s ease-in-out 0s;
   -webkit-text-fill-color: black !important;
-}
-
-/* Remove blue highlight on Firefox */
-input::-moz-selection {
-  background: white;
-  color: black;
-}
-
-input::selection {
-  background: white;
-  color: black;
+  -webkit-box-shadow: 0 0 0px 1000px white inset !important;
 }
 
 .alice-carousel__dots-item {

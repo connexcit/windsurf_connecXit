@@ -42,7 +42,14 @@ const Input = React.forwardRef(
     },
     ref,
   ) => {
-    const inputClassName = "w-full bg-transparent border-0 outline-none text-black-900_02 selection:bg-white selection:text-black-900_02";
+    const inputStyle = {
+      WebkitTextFillColor: 'black',
+      caretColor: 'black',
+      '::selection': {
+        backgroundColor: 'white',
+        color: 'black'
+      }
+    };
     
     return (
       <label
@@ -55,8 +62,9 @@ const Input = React.forwardRef(
           type={type} 
           name={name} 
           placeholder={placeholder} 
-          onChange={onChange} 
-          className={inputClassName}
+          onChange={onChange}
+          style={inputStyle}
+          className="w-full bg-transparent border-0 outline-none text-black-900_02"
           {...restProps} 
         />
         {!!suffix && suffix}
