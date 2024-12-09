@@ -1,7 +1,7 @@
 import { Helmet } from "react-helmet";
 import { Button, Img, Text, Heading, Input } from "../../components";
 import Footer31 from "../../components/Footer31";
-import Header6 from "../../components/Header6";
+import Header from "../../components/Header";
 import React from "react";
 
 export default function CXTSignUpPage() {
@@ -15,7 +15,7 @@ export default function CXTSignUpPage() {
         />
       </Helmet>
       <div className="flex w-full flex-col items-center gap-[90px] bg-white-a700 md:gap-[67px] sm:gap-[45px]">
-        <Header6 className="self-stretch" />
+        <Header className="sticky top-0 z-50 bg-white-a700 shadow-sm w-full" />
         <div className="flex w-[36%] flex-col items-center gap-3.5 md:w-full md:px-5">
           <Heading
             size="heading3xl"
