@@ -50,8 +50,8 @@ export default function CXTListPagePage() {
                   <div className="flex gap-6">
                     <div className="w-24 h-24">
                       <Img
-                        src="images/img_rectangle_355.png"
-                        alt="Chef profile"
+                        src="https://images.unsplash.com/photo-1583394293214-28ded15ee548?w=800&auto=format&fit=crop&q=60"
+                        alt="Chef Maria profile"
                         className="w-full h-full rounded-full object-cover"
                       />
                     </div>
@@ -96,8 +96,8 @@ export default function CXTListPagePage() {
                   <div className="flex gap-6">
                     <div className="w-24 h-24">
                       <Img
-                        src="images/img_rectangle_356.png"
-                        alt="Chef profile"
+                        src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=800&auto=format&fit=crop&q=60"
+                        alt="Chef Ken profile"
                         className="w-full h-full rounded-full object-cover"
                       />
                     </div>
@@ -142,8 +142,8 @@ export default function CXTListPagePage() {
                   <div className="flex gap-6">
                     <div className="w-24 h-24">
                       <Img
-                        src="images/img_rectangle_357.png"
-                        alt="Chef profile"
+                        src="https://images.unsplash.com/photo-1581299894007-aaa50297cf16?w=800&auto=format&fit=crop&q=60"
+                        alt="Chef James profile"
                         className="w-full h-full rounded-full object-cover"
                       />
                     </div>
@@ -188,8 +188,8 @@ export default function CXTListPagePage() {
                   <div className="flex gap-6">
                     <div className="w-24 h-24">
                       <Img
-                        src="images/img_rectangle_358.png"
-                        alt="Chef profile"
+                        src="https://images.unsplash.com/photo-1607631568010-a87245c0daf8?w=800&auto=format&fit=crop&q=60"
+                        alt="Chef Sophie profile"
                         className="w-full h-full rounded-full object-cover"
                       />
                     </div>
@@ -234,8 +234,8 @@ export default function CXTListPagePage() {
                   <div className="flex gap-6">
                     <div className="w-24 h-24">
                       <Img
-                        src="images/img_rectangle_359.png"
-                        alt="Chef profile"
+                        src="https://images.unsplash.com/photo-1566554273541-37a9ca77b91f?w=800&auto=format&fit=crop&q=60"
+                        alt="Chef Alex profile"
                         className="w-full h-full rounded-full object-cover"
                       />
                     </div>
