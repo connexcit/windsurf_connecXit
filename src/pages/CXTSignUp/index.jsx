@@ -1,7 +1,7 @@
 import { Helmet } from "react-helmet";
 import { Button, Img, Text, Heading, Input } from "../../components";
 import Footer31 from "../../components/Footer31";
-import Header from "../../components/Header";
+import Header from "../../components/CXTLanding/Header";
 import React from "react";
 
 export default function CXTSignUpPage() {
