@@ -26,10 +26,33 @@ ul {
 input {
   background-color: transparent;
   width: 100%;
+  color: black;
 }
 
 input:focus {
   outline: none;
+  background-color: white !important;
+  color: black !important;
+}
+
+/* Remove blue highlight on WebKit browsers */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px white inset !important;
+  -webkit-text-fill-color: black !important;
+}
+
+/* Remove blue highlight on Firefox */
+input::-moz-selection {
+  background: white;
+  color: black;
+}
+
+input::selection {
+  background: white;
+  color: black;
 }
 
 .alice-carousel__dots-item {

@@ -42,7 +42,7 @@ const Input = React.forwardRef(
     },
     ref,
   ) => {
-    const inputClassName = "w-full bg-transparent border-0 outline-none text-black-900_02";
+    const inputClassName = "w-full bg-transparent border-0 outline-none text-black-900_02 selection:bg-white selection:text-black-900_02";
     
     return (
       <label
