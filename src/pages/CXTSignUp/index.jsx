@@ -29,7 +29,7 @@ export default function CXTSignUpPage() {
             <div className="ml-2 mt-5 flex flex-col items-start md:ml-0">
               <div className="mr-1.5 flex items-center gap-2 self-stretch md:mr-0 sm:flex-col">
                 <div className="flex w-full flex-col items-start gap-1 sm:w-full">
-                  <Text as="p" className="text-[15px] font-normal tracking-[-0.60px] text-black-900_02">
+                  <Text as="p" className="text-[13px] font-normal tracking-[-0.40px] text-black-900_02">
                     First Name
                   </Text>
                   <Input 
@@ -40,7 +40,7 @@ export default function CXTSignUpPage() {
                   />
                 </div>
                 <div className="flex w-full flex-col items-start gap-0.5 sm:w-full">
-                  <Text as="p" className="text-[15px] font-normal tracking-[-0.60px] text-black-900_02">
+                  <Text as="p" className="text-[13px] font-normal tracking-[-0.40px] text-black-900_02">
                     Last Name
                   </Text>
                   <Input 
@@ -52,7 +52,7 @@ export default function CXTSignUpPage() {
                 </div>
               </div>
               <div className="mr-1.5 mt-6 flex flex-col items-start gap-1 self-stretch md:mr-0">
-                <Text as="p" className="text-[15px] font-normal tracking-[-0.60px] text-black-900_02">
+                <Text as="p" className="text-[13px] font-normal tracking-[-0.40px] text-black-900_02">
                   Email
                 </Text>
                 <Input 
@@ -63,7 +63,7 @@ export default function CXTSignUpPage() {
                 />
               </div>
               <div className="mr-1.5 mt-6 flex flex-col items-start gap-1 self-stretch md:mr-0">
-                <Text as="p" className="text-[15px] font-normal tracking-[-0.60px] text-black-900_02">
+                <Text as="p" className="text-[13px] font-normal tracking-[-0.40px] text-black-900_02">
                   Password
                 </Text>
                 <Input 

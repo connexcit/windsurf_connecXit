@@ -17,10 +17,10 @@ const variants = {
 };
 
 const sizes = {
-  lg: "h-[48px] px-3",
-  sm: "h-[36px] px-3 text-[15px]",
-  xs: "h-[32px] px-3 text-[15px]",
-  md: "h-[36px] px-3",
+  lg: "h-[48px] px-3 text-[13px]",
+  sm: "h-[36px] px-3 text-[13px]",
+  xs: "h-[32px] px-3 text-[13px]",
+  md: "h-[36px] px-3 text-[13px]",
 };
 
 const Input = React.forwardRef(
@@ -47,6 +47,7 @@ const Input = React.forwardRef(
       caretColor: 'black',
       height: '100%',
       padding: '8px 12px',
+      fontSize: '13px',
       '::selection': {
         backgroundColor: 'white',
         color: 'black'
