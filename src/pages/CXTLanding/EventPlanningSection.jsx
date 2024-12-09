@@ -111,7 +111,7 @@ export default function EventPlanningSection({ isEventPro, setIsEventPro }) {
               }`}
               onClick={() => setIsEventPro(true)}
             >
-              HIRE an EVENT PRO
+              HIRE an EVENT PRO (PLANNER)
             </Button>
             <Button
               className={`px-6 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 ease-in-out ${
@@ -121,7 +121,7 @@ export default function EventPlanningSection({ isEventPro, setIsEventPro }) {
               }`}
               onClick={() => setIsEventPro(false)}
             >
-              FIND EVENT VENDORS
+              FIND EVENT VENDOR(S)
             </Button>
           </div>
         </div>

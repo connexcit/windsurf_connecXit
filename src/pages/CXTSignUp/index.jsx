@@ -1,10 +1,14 @@
 import { Helmet } from "react-helmet";
 import { Button, Img, Text, Heading, Input } from "../../components";
 import Footer31 from "../../components/Footer31";
-import Header from "../../components/CXTLanding/Header";
+import Header from "../../components/Header";
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import { useGoogleLogin } from '@react-oauth/google';
 
 export default function CXTSignUpPage() {
+  const navigate = useNavigate();
+
   return (
     <>
       <Helmet>
