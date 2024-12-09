@@ -31,9 +31,27 @@ input {
 }
 
 input:focus {
-  outline: none;
+  outline: none !important;
+  box-shadow: none !important;
+  border-color: #E5E7EB !important;
   background-color: white !important;
   color: black !important;
+  ring-width: 0 !important;
+  -webkit-appearance: none !important;
+}
+
+/* Remove focus ring for all elements */
+*:focus {
+  outline: none !important;
+  box-shadow: none !important;
+  ring-width: 0 !important;
+}
+
+/* Remove focus visible outline */
+*:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+  ring-width: 0 !important;
 }
 
 /* Override selection color */
