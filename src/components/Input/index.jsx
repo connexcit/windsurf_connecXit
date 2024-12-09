@@ -12,7 +12,7 @@ const variants = {
   },
   outline: {
     gray_300_01: "border-gray-300_01 border border-solid text-gray-700_03",
-    gray_500: "border-gray-500 border border-solid text-white-a700",
+    gray_500: "border-gray-500 border border-solid text-black-900_02",
   },
 };
 
@@ -42,18 +42,29 @@ const Input = React.forwardRef(
     },
     ref,
   ) => {
+    const inputClassName = "w-full bg-transparent border-0 outline-none text-black-900_02";
+    
     return (
       <label
-        className={`${className} flex items-center justify-center cursor-text  ${shape && shapes[shape]} ${variant && (variants[variant]?.[color] || variants[variant])} ${size && sizes[size]}`}
+        className={`${className} flex items-center justify-center cursor-text ${shape && shapes[shape]} ${variant && (variants[variant]?.[color] || variants[variant])} ${size && sizes[size]}`}
       >
         {!!label && label}
         {!!prefix && prefix}
-        <input ref={ref} type={type} name={name} placeholder={placeholder} onChange={onChange} {...restProps} />
+        <input 
+          ref={ref} 
+          type={type} 
+          name={name} 
+          placeholder={placeholder} 
+          onChange={onChange} 
+          className={inputClassName}
+          {...restProps} 
+        />
         {!!suffix && suffix}
       </label>
     );
   },
 );
+
 Input.propTypes = {
   className: PropTypes.string,
   name: PropTypes.string,
@@ -63,9 +74,10 @@ Input.propTypes = {
   prefix: PropTypes.node,
   suffix: PropTypes.node,
   shape: PropTypes.oneOf(["round", "square"]),
-  size: PropTypes.oneOf(["lg", "sm", "xs", "md"]),
+  size: PropTypes.oneOf(["xs", "sm", "md", "lg"]),
   variant: PropTypes.oneOf(["fill", "outline"]),
   color: PropTypes.oneOf(["white_A700", "gray_300_01", "gray_500"]),
+  onChange: PropTypes.func,
 };
 
 export { Input };
