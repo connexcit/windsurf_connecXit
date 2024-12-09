@@ -14,7 +14,7 @@ export default function CXTListPagePage() {
         />
       </Helmet>
       <div className="flex flex-col bg-white-a700">
-        <Header6 className="flex items-center justify-center w-full" />
+        <Header6 className="w-full" />
         <div className="flex flex-col items-center justify-start w-full">
           <div className="flex flex-col items-center justify-start w-full">
             <Heading
@@ -27,8 +27,8 @@ export default function CXTListPagePage() {
             
             <div className="flex w-full max-w-[1282px] flex-row items-start justify-between gap-8 mt-8 px-4">
               {/* Filters Section */}
-              <div className="flex flex-col items-start w-[250px]">
-                <Text as="p" className="text-[15px] font-medium tracking-[-0.60px] text-blue_gray-900_01">
+              <div className="flex flex-col items-start w-[250px] bg-white-a700 p-4 rounded-lg">
+                <Text as="p" className="text-[15px] font-medium tracking-[-0.60px] text-black-900_02">
                   Filters
                 </Text>
                 <Text as="p" className="mt-[26px] text-[15px] font-medium tracking-[-0.60px] text-green-800">
@@ -37,14 +37,14 @@ export default function CXTListPagePage() {
                 <Text
                   size="textmd"
                   as="p"
-                  className="mt-[22px] text-[13px] font-normal tracking-[-0.52px] text-gray-400"
+                  className="mt-[22px] text-[13px] font-normal tracking-[-0.52px] text-gray-700_03"
                 >
                   Within 48 hours
                 </Text>
-                <Text as="p" className="mt-[26px] text-[15px] font-medium tracking-[-0.60px] text-blue_gray-900_01">
+                <Text as="p" className="mt-[26px] text-[15px] font-medium tracking-[-0.60px] text-black-900_02">
                   Search
                 </Text>
-                <Text as="p" className="mt-3 text-[15px] font-medium tracking-[-0.60px] text-blue_gray-900_01">
+                <Text as="p" className="mt-3 text-[15px] font-medium tracking-[-0.60px] text-black-900_02">
                   Billing
                 </Text>
               </div>
@@ -53,9 +53,9 @@ export default function CXTListPagePage() {
               <div className="flex-1">
                 <div className="flex flex-col gap-6">
                   {/* Chef Card */}
-                  <div className="flex flex-col bg-white-a700 rounded-lg p-6">
+                  <div className="flex flex-col bg-white-a700 rounded-lg p-6 shadow-md">
                     <div className="flex flex-row items-start gap-8">
-                      <div className="w-[126px] h-[126px] rounded-full overflow-hidden">
+                      <div className="w-[126px] h-[126px] rounded-full overflow-hidden bg-white-a700">
                         <Img
                           src="images/img_rectangle_355.png"
                           alt="Chef Nico"
@@ -69,7 +69,7 @@ export default function CXTListPagePage() {
                             <Heading
                               size="headingmd"
                               as="h2"
-                              className="text-[15px] font-bold tracking-[-0.60px] text-gray-700_03"
+                              className="text-[15px] font-bold tracking-[-0.60px] text-black-900_02"
                             >
                               CHEF NICO
                             </Heading>
@@ -77,14 +77,14 @@ export default function CXTListPagePage() {
                               <Text
                                 size="texts"
                                 as="p"
-                                className="text-[12px] font-normal tracking-[-0.48px] text-gray-700_03"
+                                className="text-[12px] font-normal tracking-[-0.48px] text-black-900_02"
                               >
                                 324 hires on ConnecXit
                               </Text>
                               <Text
                                 size="texts"
                                 as="p"
-                                className="text-[12px] font-normal tracking-[-0.48px] text-gray-700_03"
+                                className="text-[12px] font-normal tracking-[-0.48px] text-black-900_02"
                               >
                                 Responds within a day
                               </Text>
@@ -97,7 +97,7 @@ export default function CXTListPagePage() {
                             <Text
                               size="textxs"
                               as="p"
-                              className="text-[10px] font-normal tracking-[-0.40px] text-gray-500_01"
+                              className="text-[10px] font-normal tracking-[-0.40px] text-gray-700_03"
                             >
                               starting price
                             </Text>
@@ -107,14 +107,17 @@ export default function CXTListPagePage() {
                         <Text
                           size="textmd"
                           as="p"
-                          className="mt-4 text-[13px] font-normal leading-[146.7%] tracking-[-0.52px] text-gray-700_03"
+                          className="mt-4 text-[13px] font-normal leading-[146.7%] tracking-[-0.52px] text-black-900_02"
                         >
                           Hannah H. Says "I hired Chef Nico to cook for a bachelorette party. He helped me to make a
                           custom menu that would best fit our needs."
                         </Text>
                         
                         <div className="mt-4 flex justify-end">
-                          <Button className="min-w-[116px] rounded-[16px] px-[18px] tracking-[-0.60px]">
+                          <Button 
+                            className="min-w-[116px] rounded-[16px] px-[18px] tracking-[-0.60px] bg-deep_orange-500 text-white-a700"
+                            color="deep_orange_500"
+                          >
                             View Profile
                           </Button>
                         </div>
