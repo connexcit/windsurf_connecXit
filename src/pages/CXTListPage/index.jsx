@@ -17,8 +17,8 @@ export default function CXTListPagePage() {
         <Header6 className="w-full" />
         <div className="container mx-auto px-4 py-8">
           <div className="flex flex-col items-center justify-start w-full">
-            <div className="bg-blue-50 w-full p-4 mb-6 rounded-lg">
-              <Text className="text-blue-800 text-center">Responds quickly</Text>
+            <div className="bg-deep_orange-500/50 w-full p-4 mb-6 rounded-lg">
+              <Text className="text-deep_orange-800 text-center font-medium">Responds quickly</Text>
             </div>
             
             <div className="flex w-full gap-8">
