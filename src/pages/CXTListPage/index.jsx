@@ -1,6 +1,6 @@
 import { Helmet } from "react-helmet";
 import { Text, Heading, Img, Button } from "../../components";
-import Header6 from "../../components/Header6";
+import Header from "../../components/Header";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -16,7 +16,7 @@ export default function CXTListPagePage() {
         />
       </Helmet>
       <div className="flex flex-col bg-gray-50 min-h-screen">
-        <Header6 className="w-full" />
+        <Header className="sticky top-0 z-50 bg-white-a700 shadow-sm" />
         <div className="container mx-auto px-4 py-8">
           <div className="flex flex-col items-center justify-start w-full">
             <div style={{ background: 'linear-gradient(90deg, rgba(255, 87, 34, 0.5) 0%, rgba(255, 255, 255, 1) 100%)' }} className="w-full p-4 mb-6 rounded-lg">

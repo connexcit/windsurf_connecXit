@@ -1,20 +1,20 @@
 import React from "react";
 import { Helmet } from "react-helmet";
 import { Text, Button, Img } from "../../components";
-import Header6 from "../../components/Header6";
+import Header from "../../components/Header";
 
 export default function CXTDetailPagePage() {
   return (
     <>
       <Helmet>
-        <title>Chef Details - ConnecXit</title>
+        <title>Chef Profile - ConnecXit</title>
         <meta
           name="description"
-          content="View detailed information about our professional chefs, including their experience, services, and availability."
+          content="View detailed profile, services, and reviews of professional chefs on ConnecXit. Book your next culinary experience with confidence."
         />
       </Helmet>
       <div className="flex flex-col bg-gray-50 min-h-screen">
-        <Header6 className="w-full" />
+        <Header className="sticky top-0 z-50 bg-white-a700 shadow-sm" />
         <div className="container mx-auto px-4 py-8">
           {/* Navigation Tabs */}
           <div className="border-b bg-white -mx-4 mb-8">
