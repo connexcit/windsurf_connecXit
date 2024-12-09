@@ -2,8 +2,10 @@ import { Helmet } from "react-helmet";
 import { Text, Heading, Img, Button } from "../../components";
 import Header6 from "../../components/Header6";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function CXTListPagePage() {
+  const navigate = useNavigate();
   return (
     <>
       <Helmet>
@@ -94,6 +96,7 @@ export default function CXTListPagePage() {
                           </Text>
                           <Button
                             className="mt-4 bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600"
+                            onClick={() => navigate("/cxt-detail-page")}
                           >
                             View Profile
                           </Button>
@@ -143,6 +146,7 @@ export default function CXTListPagePage() {
                           </Text>
                           <Button
                             className="mt-4 bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600"
+                            onClick={() => navigate("/cxt-detail-page")}
                           >
                             View Profile
                           </Button>
@@ -192,6 +196,7 @@ export default function CXTListPagePage() {
                           </Text>
                           <Button
                             className="mt-4 bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600"
+                            onClick={() => navigate("/cxt-detail-page")}
                           >
                             View Profile
                           </Button>
@@ -241,6 +246,7 @@ export default function CXTListPagePage() {
                           </Text>
                           <Button
                             className="mt-4 bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600"
+                            onClick={() => navigate("/cxt-detail-page")}
                           >
                             View Profile
                           </Button>
@@ -290,6 +296,7 @@ export default function CXTListPagePage() {
                           </Text>
                           <Button
                             className="mt-4 bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600"
+                            onClick={() => navigate("/cxt-detail-page")}
                           >
                             View Profile
                           </Button>
