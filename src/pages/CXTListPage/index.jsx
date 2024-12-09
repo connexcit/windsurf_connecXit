@@ -60,26 +60,26 @@ export default function CXTListPagePage() {
                       <div className="flex justify-between items-start">
                         <div>
                           <Heading as="h2" className="text-xl font-semibold">
-                            Chef Nico
+                            Chef Maria's Kitchen
                           </Heading>
                           <div className="flex items-center mt-1">
                             <Text className="text-green-600 font-medium">Exceptional 5.0</Text>
-                            <Text className="text-gray-600 ml-1">(6)</Text>
+                            <Text className="text-gray-600 ml-1">(32)</Text>
                           </div>
                           <div className="mt-2 space-y-1">
-                            <Text className="text-gray-600 text-sm">15 hires on ConnecXit</Text>
-                            <Text className="text-gray-600 text-sm">4 similar jobs done near you</Text>
-                            <Text className="text-gray-600 text-sm">Responds in about 11 min</Text>
+                            <Text className="text-gray-600 text-sm">42 hires on ConnecXit</Text>
+                            <Text className="text-gray-600 text-sm">12 similar jobs near you</Text>
+                            <Text className="text-gray-600 text-sm">Responds in about 15 min</Text>
                           </div>
                         </div>
                         <div className="text-right">
-                          <Text className="text-xl font-semibold">$132</Text>
+                          <Text className="text-xl font-semibold">$155</Text>
                           <Text className="text-gray-600 text-sm">starting price</Text>
                         </div>
                       </div>
                       <div className="mt-4">
                         <Text className="text-gray-800">
-                          "Chef Nico did an amazing job with our dinner party. The food was exceptional and the service was outstanding..."
+                          "Chef Maria created an incredible dining experience. Her Mediterranean fusion dishes were outstanding..."
                         </Text>
                         <Button
                           className="mt-4 bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600"
@@ -106,24 +106,165 @@ export default function CXTListPagePage() {
                       <div className="flex justify-between items-start">
                         <div>
                           <Heading as="h2" className="text-xl font-semibold">
-                            Triangle Cleaning
+                            Sushi Master Ken
                           </Heading>
                           <div className="flex items-center mt-1">
                             <Text className="text-green-600 font-medium">Great 4.8</Text>
-                            <Text className="text-gray-600 ml-1">(10)</Text>
+                            <Text className="text-gray-600 ml-1">(24)</Text>
                           </div>
                           <div className="mt-2 space-y-1">
-                            <Text className="text-gray-600 text-sm">18 hires on ConnecXit</Text>
-                            <Text className="text-gray-600 text-sm">Serves Raleigh, NC</Text>
-                            <Text className="text-gray-600 text-sm">Responds in about 2 hours</Text>
+                            <Text className="text-gray-600 text-sm">28 hires on ConnecXit</Text>
+                            <Text className="text-gray-600 text-sm">Serves Raleigh-Durham Area</Text>
+                            <Text className="text-gray-600 text-sm">Responds in about 30 min</Text>
                           </div>
                         </div>
                         <div className="text-right">
-                          <Text className="text-xl font-semibold">$77</Text>
+                          <Text className="text-xl font-semibold">$185</Text>
                           <Text className="text-gray-600 text-sm">starting price</Text>
                         </div>
                       </div>
                       <div className="mt-4">
+                        <Text className="text-gray-800">
+                          "Ken's sushi-making skills are incredible. He created a beautiful spread for our corporate event..."
+                        </Text>
+                        <Button
+                          className="mt-4 bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600"
+                        >
+                          View Profile
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Chef Card 3 */}
+                <div className="bg-white rounded-lg p-6 shadow-sm">
+                  <div className="flex gap-6">
+                    <div className="w-24 h-24">
+                      <Img
+                        src="images/img_rectangle_357.png"
+                        alt="Chef profile"
+                        className="w-full h-full rounded-full object-cover"
+                      />
+                    </div>
+                    
+                    <div className="flex-1">
+                      <div className="flex justify-between items-start">
+                        <div>
+                          <Heading as="h2" className="text-xl font-semibold">
+                            BBQ Pro James
+                          </Heading>
+                          <div className="flex items-center mt-1">
+                            <Text className="text-green-600 font-medium">Excellent 4.9</Text>
+                            <Text className="text-gray-600 ml-1">(18)</Text>
+                          </div>
+                          <div className="mt-2 space-y-1">
+                            <Text className="text-gray-600 text-sm">22 hires on ConnecXit</Text>
+                            <Text className="text-gray-600 text-sm">8 similar jobs near you</Text>
+                            <Text className="text-gray-600 text-sm">Responds in about 1 hour</Text>
+                          </div>
+                        </div>
+                        <div className="text-right">
+                          <Text className="text-xl font-semibold">$145</Text>
+                          <Text className="text-gray-600 text-sm">starting price</Text>
+                        </div>
+                      </div>
+                      <div className="mt-4">
+                        <Text className="text-gray-800">
+                          "James' BBQ skills are unmatched. The brisket and ribs were perfectly smoked..."
+                        </Text>
+                        <Button
+                          className="mt-4 bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600"
+                        >
+                          View Profile
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Chef Card 4 */}
+                <div className="bg-white rounded-lg p-6 shadow-sm">
+                  <div className="flex gap-6">
+                    <div className="w-24 h-24">
+                      <Img
+                        src="images/img_rectangle_358.png"
+                        alt="Chef profile"
+                        className="w-full h-full rounded-full object-cover"
+                      />
+                    </div>
+                    
+                    <div className="flex-1">
+                      <div className="flex justify-between items-start">
+                        <div>
+                          <Heading as="h2" className="text-xl font-semibold">
+                            Pastry Chef Sophie
+                          </Heading>
+                          <div className="flex items-center mt-1">
+                            <Text className="text-green-600 font-medium">Great 4.7</Text>
+                            <Text className="text-gray-600 ml-1">(15)</Text>
+                          </div>
+                          <div className="mt-2 space-y-1">
+                            <Text className="text-gray-600 text-sm">19 hires on ConnecXit</Text>
+                            <Text className="text-gray-600 text-sm">Specializes in desserts & pastries</Text>
+                            <Text className="text-gray-600 text-sm">Responds in about 45 min</Text>
+                          </div>
+                        </div>
+                        <div className="text-right">
+                          <Text className="text-xl font-semibold">$125</Text>
+                          <Text className="text-gray-600 text-sm">starting price</Text>
+                        </div>
+                      </div>
+                      <div className="mt-4">
+                        <Text className="text-gray-800">
+                          "Sophie's desserts were the highlight of our wedding. Her attention to detail is amazing..."
+                        </Text>
+                        <Button
+                          className="mt-4 bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600"
+                        >
+                          View Profile
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Chef Card 5 */}
+                <div className="bg-white rounded-lg p-6 shadow-sm">
+                  <div className="flex gap-6">
+                    <div className="w-24 h-24">
+                      <Img
+                        src="images/img_rectangle_359.png"
+                        alt="Chef profile"
+                        className="w-full h-full rounded-full object-cover"
+                      />
+                    </div>
+                    
+                    <div className="flex-1">
+                      <div className="flex justify-between items-start">
+                        <div>
+                          <Heading as="h2" className="text-xl font-semibold">
+                            Farm-to-Table Alex
+                          </Heading>
+                          <div className="flex items-center mt-1">
+                            <Text className="text-green-600 font-medium">Exceptional 5.0</Text>
+                            <Text className="text-gray-600 ml-1">(21)</Text>
+                          </div>
+                          <div className="mt-2 space-y-1">
+                            <Text className="text-gray-600 text-sm">25 hires on ConnecXit</Text>
+                            <Text className="text-gray-600 text-sm">Local ingredients specialist</Text>
+                            <Text className="text-gray-600 text-sm">Responds in about 20 min</Text>
+                          </div>
+                        </div>
+                        <div className="text-right">
+                          <Text className="text-xl font-semibold">$165</Text>
+                          <Text className="text-gray-600 text-sm">starting price</Text>
+                        </div>
+                      </div>
+                      <div className="mt-4">
+                        <Text className="text-gray-800">
+                          "Alex's commitment to local ingredients and seasonal menus created an unforgettable experience..."
+                        </Text>
                         <Button
                           className="mt-4 bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600"
                         >
