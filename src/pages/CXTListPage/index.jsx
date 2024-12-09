@@ -61,7 +61,7 @@ export default function CXTListPagePage() {
                       <div className="flex-1">
                         <div className="flex justify-between items-start">
                           <div>
-                            <Heading as="h2" className="text-xl font-semibold">
+                            <Heading as="h2" className="text-xl font-semibold text-black">
                               Chef Maria's Kitchen
                             </Heading>
                             <div className="flex items-center mt-1">
@@ -110,7 +110,7 @@ export default function CXTListPagePage() {
                       <div className="flex-1">
                         <div className="flex justify-between items-start">
                           <div>
-                            <Heading as="h2" className="text-xl font-semibold">
+                            <Heading as="h2" className="text-xl font-semibold text-black">
                               Sushi Master Ken
                             </Heading>
                             <div className="flex items-center mt-1">
@@ -159,7 +159,7 @@ export default function CXTListPagePage() {
                       <div className="flex-1">
                         <div className="flex justify-between items-start">
                           <div>
-                            <Heading as="h2" className="text-xl font-semibold">
+                            <Heading as="h2" className="text-xl font-semibold text-black">
                               BBQ Pro James
                             </Heading>
                             <div className="flex items-center mt-1">
@@ -208,7 +208,7 @@ export default function CXTListPagePage() {
                       <div className="flex-1">
                         <div className="flex justify-between items-start">
                           <div>
-                            <Heading as="h2" className="text-xl font-semibold">
+                            <Heading as="h2" className="text-xl font-semibold text-black">
                               Pastry Chef Sophie
                             </Heading>
                             <div className="flex items-center mt-1">
@@ -257,7 +257,7 @@ export default function CXTListPagePage() {
                       <div className="flex-1">
                         <div className="flex justify-between items-start">
                           <div>
-                            <Heading as="h2" className="text-xl font-semibold">
+                            <Heading as="h2" className="text-xl font-semibold text-black">
                               Farm-to-Table Alex
                             </Heading>
                             <div className="flex items-center mt-1">
