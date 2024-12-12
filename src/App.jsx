@@ -12,6 +12,7 @@ import CXTSignUp from "./pages/CXTSignUp";
 import CTXEventTickets from "./pages/CTXEventTickets";
 import CXTListPage from "./pages/CXTListPage";
 import CXTDetailPage from "./pages/CXTDetailPage";
+import CXTInbox from "./pages/CXTInbox";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
               <Route path="/ctxeventtickets" element={<CTXEventTickets />} />
               <Route path="/cxtlistpage" element={<CXTListPage />} />
               <Route path="/cxtdetailpage" element={<CXTDetailPage />} />
+              <Route path="/cxtinbox" element={<CXTInbox />} />
             </Routes>
           </Router>
         </GoogleOAuthProvider>
