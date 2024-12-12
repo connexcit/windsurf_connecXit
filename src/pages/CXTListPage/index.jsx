@@ -1,312 +1,93 @@
 import { Helmet } from "react-helmet";
-import { Text, Heading, Img, Button } from "../../components";
+import { Text } from "../../components";
 import Header from "../../components/Header";
+import ChefCard from "../../components/ChefCard";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
+const chefsList = [
+  {
+    name: "Chef Maria's Kitchen",
+    rating: "Exceptional 5.0",
+    reviewCount: 32,
+    hireCount: 42,
+    locationInfo: "12 similar jobs near you",
+    responseTime: "Responds in about 15 min",
+    startingPrice: 155,
+    testimonial: "Chef Maria created an amazing dining experience for our family gathering...",
+    imageUrl: "https://images.unsplash.com/photo-1583394293214-28ded15ee548?w=800&auto=format&fit=crop&q=60"
+  },
+  {
+    name: "Sushi Master Ken",
+    rating: "Great 4.8",
+    reviewCount: 24,
+    hireCount: 28,
+    locationInfo: "Serves Raleigh-Durham Area",
+    responseTime: "Responds in about 30 min",
+    startingPrice: 185,
+    testimonial: "Ken's sushi-making skills are incredible. He created a beautiful spread for our corporate event...",
+    imageUrl: "https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=800&auto=format&fit=crop&q=60"
+  },
+  {
+    name: "BBQ Pro James",
+    rating: "Excellent 4.9",
+    reviewCount: 18,
+    hireCount: 22,
+    locationInfo: "8 similar jobs near you",
+    responseTime: "Responds in about 1 hour",
+    startingPrice: 145,
+    testimonial: "James's BBQ skills are second to none. The food was amazing and the service was professional...",
+    imageUrl: "https://images.unsplash.com/photo-1581299894007-aaa50297cf16?w=800&auto=format&fit=crop&q=60"
+  },
+  {
+    name: "Pastry Chef Sophie",
+    rating: "Great 4.7",
+    reviewCount: 15,
+    hireCount: 19,
+    locationInfo: "Specializes in desserts & pastries",
+    responseTime: "Responds in about 45 min",
+    startingPrice: 125,
+    testimonial: "Sophie's desserts were the highlight of our wedding. Her attention to detail is amazing...",
+    imageUrl: "https://images.unsplash.com/photo-1607631568010-a87245c0daf8?w=800&auto=format&fit=crop&q=60"
+  },
+  {
+    name: "Farm-to-Table Alex",
+    rating: "Exceptional 5.0",
+    reviewCount: 21,
+    hireCount: 25,
+    locationInfo: "Local ingredients specialist",
+    responseTime: "Responds in about 20 min",
+    startingPrice: 165,
+    testimonial: "Alex's commitment to local ingredients and seasonal menus created an unforgettable experience...",
+    imageUrl: "https://images.unsplash.com/photo-1566554273541-37a9ca77b91f?w=800&auto=format&fit=crop&q=60"
+  }
+];
+
 export default function CXTListPagePage() {
   const navigate = useNavigate();
+
+  const handleChefClick = (chefData) => {
+    console.log('Navigating to detail page with chef:', chefData);
+    navigate('/cxtdetailpage', { state: { chefData } });
+  };
+
   return (
     <>
       <Helmet>
-        <title>Find Professional Chefs - ConnecXit Listings</title>
-        <meta
-          name="description"
-          content="Discover professional chefs matching your criteria on ConnecXit. View profiles, starting prices, and read customer testimonials to find the perfect chef for your event."
-        />
+        <title>Find Professional Chefs - ConnecXit</title>
+        <meta name="description" content="Browse and hire professional chefs for your events through ConnecXit" />
       </Helmet>
       <div className="flex flex-col bg-gray-50 min-h-screen">
         <Header className="sticky top-0 z-50 bg-white-a700 shadow-sm" />
         <div className="container mx-auto px-4 py-8">
-          <div className="flex flex-col items-center justify-start w-full">
-            <div style={{ background: 'linear-gradient(90deg, rgba(255, 87, 34, 0.5) 0%, rgba(255, 255, 255, 1) 100%)' }} className="w-full p-4 mb-6 rounded-lg">
-              <Text className="text-orange-800 text-center font-medium">Responds quickly</Text>
-            </div>
-            
-            <div className="flex w-full gap-8">
-              {/* Filters Section */}
-              <div className="w-64 flex-shrink-0">
-                <div className="bg-white rounded-lg p-6 shadow-sm">
-                  <Text className="font-semibold mb-4">Filters</Text>
-                  <div className="space-y-4">
-                    <div>
-                      <Text className="text-sm font-medium mb-2">Vendor Type</Text>
-                      <div className="flex items-center space-x-2 bg-orange-50 p-2 rounded">
-                        <Text className="text-sm text-orange-600">Chefs</Text>
-                        <svg className="w-4 h-4 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                      </div>
-                    </div>
-                    <div>
-                      <Text className="text-sm font-medium mb-2">Location</Text>
-                      <Text className="text-sm text-gray-600">Raleigh, NC</Text>
-                    </div>
-                    <div>
-                      <Text className="text-sm font-medium mb-2">Response Time</Text>
-                      <Text className="text-sm text-gray-600">Within 48 hours</Text>
-                    </div>
-                    <div>
-                      <Text className="text-sm font-medium mb-2">Price Range</Text>
-                      <Text className="text-sm text-gray-600">$30 - $200</Text>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Results Section */}
-              <div className="flex-1 space-y-4">
-                {/* Chef Card 1 */}
-                <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-                  <div className="h-2 bg-deep_orange-500"></div>
-                  <div className="p-6">
-                    <div className="flex gap-6">
-                      <div className="w-24 h-24">
-                        <Img
-                          src="https://images.unsplash.com/photo-1583394293214-28ded15ee548?w=800&auto=format&fit=crop&q=60"
-                          alt="Chef Maria profile"
-                          className="w-full h-full rounded-full object-cover"
-                        />
-                      </div>
-                      
-                      <div className="flex-1">
-                        <div className="flex justify-between items-start">
-                          <div>
-                            <Heading as="h2" className="text-xl font-semibold text-gray-900">
-                              Chef Maria's Kitchen
-                            </Heading>
-                            <div className="flex items-center mt-1">
-                              <Text className="text-green-600 font-medium">Exceptional 5.0</Text>
-                              <Text className="text-gray-600 ml-1">(32)</Text>
-                            </div>
-                            <div className="mt-2 space-y-1">
-                              <Text className="text-gray-600 text-sm">42 hires on ConnecXit</Text>
-                              <Text className="text-gray-600 text-sm">12 similar jobs near you</Text>
-                              <Text className="text-gray-600 text-sm">Responds in about 15 min</Text>
-                            </div>
-                          </div>
-                          <div className="text-right">
-                            <Text className="text-xl font-semibold">$155</Text>
-                            <Text className="text-gray-600 text-sm">starting price</Text>
-                          </div>
-                        </div>
-                        <div className="mt-4">
-                          <Text className="text-gray-800">
-                            "Chef Maria created an incredible dining experience. Her Mediterranean fusion dishes were outstanding..."
-                          </Text>
-                          <Button
-                            className="mt-4 bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600"
-                            onClick={() => navigate("/cxt-detail-page")}
-                          >
-                            View Profile
-                          </Button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Chef Card 2 */}
-                <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-                  <div className="h-2 bg-deep_orange-500"></div>
-                  <div className="p-6">
-                    <div className="flex gap-6">
-                      <div className="w-24 h-24">
-                        <Img
-                          src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=800&auto=format&fit=crop&q=60"
-                          alt="Chef Ken profile"
-                          className="w-full h-full rounded-full object-cover"
-                        />
-                      </div>
-                      
-                      <div className="flex-1">
-                        <div className="flex justify-between items-start">
-                          <div>
-                            <Heading as="h2" className="text-xl font-semibold text-gray-900">
-                              Sushi Master Ken
-                            </Heading>
-                            <div className="flex items-center mt-1">
-                              <Text className="text-green-600 font-medium">Great 4.8</Text>
-                              <Text className="text-gray-600 ml-1">(24)</Text>
-                            </div>
-                            <div className="mt-2 space-y-1">
-                              <Text className="text-gray-600 text-sm">28 hires on ConnecXit</Text>
-                              <Text className="text-gray-600 text-sm">Serves Raleigh-Durham Area</Text>
-                              <Text className="text-gray-600 text-sm">Responds in about 30 min</Text>
-                            </div>
-                          </div>
-                          <div className="text-right">
-                            <Text className="text-xl font-semibold">$185</Text>
-                            <Text className="text-gray-600 text-sm">starting price</Text>
-                          </div>
-                        </div>
-                        <div className="mt-4">
-                          <Text className="text-gray-800">
-                            "Ken's sushi-making skills are incredible. He created a beautiful spread for our corporate event..."
-                          </Text>
-                          <Button
-                            className="mt-4 bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600"
-                            onClick={() => navigate("/cxt-detail-page")}
-                          >
-                            View Profile
-                          </Button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Chef Card 3 */}
-                <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-                  <div className="h-2 bg-deep_orange-500"></div>
-                  <div className="p-6">
-                    <div className="flex gap-6">
-                      <div className="w-24 h-24">
-                        <Img
-                          src="https://images.unsplash.com/photo-1581299894007-aaa50297cf16?w=800&auto=format&fit=crop&q=60"
-                          alt="Chef James profile"
-                          className="w-full h-full rounded-full object-cover"
-                        />
-                      </div>
-                      
-                      <div className="flex-1">
-                        <div className="flex justify-between items-start">
-                          <div>
-                            <Heading as="h2" className="text-xl font-semibold text-gray-900">
-                              BBQ Pro James
-                            </Heading>
-                            <div className="flex items-center mt-1">
-                              <Text className="text-green-600 font-medium">Excellent 4.9</Text>
-                              <Text className="text-gray-600 ml-1">(18)</Text>
-                            </div>
-                            <div className="mt-2 space-y-1">
-                              <Text className="text-gray-600 text-sm">22 hires on ConnecXit</Text>
-                              <Text className="text-gray-600 text-sm">8 similar jobs near you</Text>
-                              <Text className="text-gray-600 text-sm">Responds in about 1 hour</Text>
-                            </div>
-                          </div>
-                          <div className="text-right">
-                            <Text className="text-xl font-semibold">$145</Text>
-                            <Text className="text-gray-600 text-sm">starting price</Text>
-                          </div>
-                        </div>
-                        <div className="mt-4">
-                          <Text className="text-gray-800">
-                            "James' BBQ skills are unmatched. The brisket and ribs were perfectly smoked..."
-                          </Text>
-                          <Button
-                            className="mt-4 bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600"
-                            onClick={() => navigate("/cxt-detail-page")}
-                          >
-                            View Profile
-                          </Button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Chef Card 4 */}
-                <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-                  <div className="h-2 bg-deep_orange-500"></div>
-                  <div className="p-6">
-                    <div className="flex gap-6">
-                      <div className="w-24 h-24">
-                        <Img
-                          src="https://images.unsplash.com/photo-1607631568010-a87245c0daf8?w=800&auto=format&fit=crop&q=60"
-                          alt="Chef Sophie profile"
-                          className="w-full h-full rounded-full object-cover"
-                        />
-                      </div>
-                      
-                      <div className="flex-1">
-                        <div className="flex justify-between items-start">
-                          <div>
-                            <Heading as="h2" className="text-xl font-semibold text-gray-900">
-                              Pastry Chef Sophie
-                            </Heading>
-                            <div className="flex items-center mt-1">
-                              <Text className="text-green-600 font-medium">Great 4.7</Text>
-                              <Text className="text-gray-600 ml-1">(15)</Text>
-                            </div>
-                            <div className="mt-2 space-y-1">
-                              <Text className="text-gray-600 text-sm">19 hires on ConnecXit</Text>
-                              <Text className="text-gray-600 text-sm">Specializes in desserts & pastries</Text>
-                              <Text className="text-gray-600 text-sm">Responds in about 45 min</Text>
-                            </div>
-                          </div>
-                          <div className="text-right">
-                            <Text className="text-xl font-semibold">$125</Text>
-                            <Text className="text-gray-600 text-sm">starting price</Text>
-                          </div>
-                        </div>
-                        <div className="mt-4">
-                          <Text className="text-gray-800">
-                            "Sophie's desserts were the highlight of our wedding. Her attention to detail is amazing..."
-                          </Text>
-                          <Button
-                            className="mt-4 bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600"
-                            onClick={() => navigate("/cxt-detail-page")}
-                          >
-                            View Profile
-                          </Button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Chef Card 5 */}
-                <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-                  <div className="h-2 bg-deep_orange-500"></div>
-                  <div className="p-6">
-                    <div className="flex gap-6">
-                      <div className="w-24 h-24">
-                        <Img
-                          src="https://images.unsplash.com/photo-1566554273541-37a9ca77b91f?w=800&auto=format&fit=crop&q=60"
-                          alt="Chef Alex profile"
-                          className="w-full h-full rounded-full object-cover"
-                        />
-                      </div>
-                      
-                      <div className="flex-1">
-                        <div className="flex justify-between items-start">
-                          <div>
-                            <Heading as="h2" className="text-xl font-semibold text-gray-900">
-                              Farm-to-Table Alex
-                            </Heading>
-                            <div className="flex items-center mt-1">
-                              <Text className="text-green-600 font-medium">Exceptional 5.0</Text>
-                              <Text className="text-gray-600 ml-1">(21)</Text>
-                            </div>
-                            <div className="mt-2 space-y-1">
-                              <Text className="text-gray-600 text-sm">25 hires on ConnecXit</Text>
-                              <Text className="text-gray-600 text-sm">Local ingredients specialist</Text>
-                              <Text className="text-gray-600 text-sm">Responds in about 20 min</Text>
-                            </div>
-                          </div>
-                          <div className="text-right">
-                            <Text className="text-xl font-semibold">$165</Text>
-                            <Text className="text-gray-600 text-sm">starting price</Text>
-                          </div>
-                        </div>
-                        <div className="mt-4">
-                          <Text className="text-gray-800">
-                            "Alex's commitment to local ingredients and seasonal menus created an unforgettable experience..."
-                          </Text>
-                          <Button
-                            className="mt-4 bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600"
-                            onClick={() => navigate("/cxt-detail-page")}
-                          >
-                            View Profile
-                          </Button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {chefsList.map((chef, index) => (
+              <ChefCard 
+                key={index}
+                {...chef}
+                onClick={() => handleChefClick(chef)}
+              />
+            ))}
           </div>
         </div>
       </div>
