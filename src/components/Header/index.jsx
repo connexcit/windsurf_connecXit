@@ -29,9 +29,21 @@ export default function Header({ ...props }) {
 
       {/* Navigation Links */}
       <div className="flex flex-1 max-w-[894px] items-center justify-end gap-6 md:gap-4 md:flex-col">
-        {/* Map Link */}
-        <Link to="/service-providers" className="text-gray-800 hover:text-deep_orange-500 font-medium">
-          Map
+        {/* Home Link */}
+        <Link to="/" className="text-gray-700 hover:text-gray-900">
+          Home
+        </Link>
+        {/* About Link */}
+        <Link to="/about" className="text-gray-700 hover:text-gray-900">
+          About
+        </Link>
+        {/* Services Link */}
+        <Link to="/services" className="text-gray-700 hover:text-gray-900">
+          Services
+        </Link>
+        {/* Contact Link */}
+        <Link to="/contact" className="text-gray-700 hover:text-gray-900">
+          Contact
         </Link>
         {/* Action Buttons */}
         <div className="flex gap-3 md:gap-2 md:flex-wrap sm:flex-col">

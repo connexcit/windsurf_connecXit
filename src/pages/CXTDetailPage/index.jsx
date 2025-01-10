@@ -1,8 +1,8 @@
 import React from "react";
 import { Helmet } from "react-helmet";
 import Header from "../../components/Header";
-import { useNavigate } from "react-router-dom";
-import Map from "../../components/Map";
+import { useNavigate, useParams } from "react-router-dom";
+import { Button, Img, Text } from "../../components";
 
 export default function CXTDetailPagePage() {
   const chefData = {
@@ -156,15 +156,9 @@ export default function CXTDetailPagePage() {
                 <h2 className="text-xl font-semibold mb-4">Location</h2>
                 <div className="relative">
                   {chefData.location && (
-                    <Map 
-                      center={[chefData.location.lat, chefData.location.lng]} 
-                      markers={[
-                        {
-                          position: [chefData.location.lat, chefData.location.lng],
-                          popup: chefData.name
-                        }
-                      ]}
-                    />
+                    <div>
+                      <p>Map component has been removed.</p>
+                    </div>
                   )}
                 </div>
               </section>
