@@ -1,7 +1,10 @@
 import { Button, Heading } from "../../components";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function CallToActionSection() {
+  const navigate = useNavigate();
+  
   return (
     <>
       {/* call to action section */}
@@ -16,15 +19,14 @@ export default function CallToActionSection() {
               <span className="text-black-900_02">Ready to Join&nbsp;</span>
               <span className="text-deep_orange-500">ConnecXit ?</span>
             </Heading>
-            <a href="https://www.youtube.com/embed/bv8Fxk0sz7I" target="_blank">
-              <Button
-                size="xs"
-                shape="round"
-                className="min-w-[208px] rounded-lg px-[26px] font-medium tracking-[-1.60px] sm:px-5"
-              >
-                Sign Up!
-              </Button>
-            </a>
+            <Button
+              size="xs"
+              shape="round"
+              className="min-w-[208px] rounded-lg px-[26px] font-medium tracking-[-1.60px] sm:px-5"
+              onClick={() => navigate("/cxtsignup")}
+            >
+              Sign Up!
+            </Button>
           </div>
         </div>
         <div className="mx-[122px] h-px bg-gray-500_04 md:mx-0" />

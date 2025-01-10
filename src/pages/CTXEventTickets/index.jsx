@@ -1,29 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
+import { Button, Img, Text } from "../../components";
+import Footer31 from "../../components/Footer31";
 import Header from "../../components/Header";
-import Footer5 from "../../components/Footer5";
 import Select from "react-select";
-import { Button } from '@radix-ui/themes';
 
-const categories = [
-  { value: "all", label: "All Categories" },
-  { value: "music", label: "Music" },
-  { value: "food-drink", label: "Food & Drink" },
-  { value: "charity", label: "Charity & Causes" },
-  { value: "business", label: "Business" },
-  { value: "sports", label: "Sports & Fitness" },
-  { value: "arts", label: "Arts" },
-  { value: "technology", label: "Science & Tech" }
-];
-
-const dateOptions = [
-  { value: "any", label: "Any date" },
-  { value: "today", label: "Today" },
-  { value: "tomorrow", label: "Tomorrow" },
-  { value: "weekend", label: "This weekend" },
-  { value: "week", label: "This week" },
-  { value: "month", label: "This month" }
-];
+const UNSPLASH_ACCESS_KEY = import.meta.env.VITE_UNSPLASH_ACCESS_KEY;
 
 const mockEvents = [
   {
@@ -31,185 +13,220 @@ const mockEvents = [
     title: "Summer Music Festival 2024",
     date: "Sat, June 15, 2024 • 2:00 PM",
     location: "Central Park, New York",
-    image: "images/img_rectangle_276.png",
     category: "Music",
-    price: "From $59.99"
+    price: "From $59.99",
+    searchQuery: "summer music festival concert stage"
   },
   {
     id: 2,
-    title: "Tech Conference 2024",
+    title: "Tech Innovation Summit",
     date: "Mon, July 1, 2024 • 9:00 AM",
     location: "Convention Center, San Francisco",
-    image: "images/img_rectangle_276.png",
     category: "Technology",
-    price: "From $299.99"
+    price: "From $299.99",
+    searchQuery: "technology conference presentation"
   },
   {
     id: 3,
     title: "Food & Wine Festival",
     date: "Sat, August 10, 2024 • 12:00 PM",
     location: "Downtown District",
-    image: "images/img_rectangle_276.png",
     category: "Food & Drink",
-    price: "From $75.00"
+    price: "From $75.00",
+    searchQuery: "gourmet food wine tasting event"
   },
   {
     id: 4,
-    title: "Charity Gala Night",
+    title: "Annual Charity Gala",
     date: "Fri, September 20, 2024 • 7:00 PM",
     location: "Grand Hotel Ballroom",
-    image: "images/img_rectangle_276.png",
     category: "Charity",
-    price: "From $150.00"
+    price: "From $150.00",
+    searchQuery: "elegant charity gala ballroom event"
   }
 ];
 
-const customSelectStyles = {
-  control: (base) => ({
-    ...base,
-    minHeight: '48px',
-    border: '1px solid #E6E6E6',
-    borderRadius: '8px',
-    boxShadow: 'none',
-    '&:hover': {
-      border: '1px solid #E6E6E6'
-    }
-  }),
-  placeholder: (base) => ({
-    ...base,
-    color: '#666666',
-    fontSize: '15px'
-  })
-};
+const categories = [
+  { value: "all", label: "All Categories" },
+  { value: "music", label: "Music" },
+  { value: "technology", label: "Technology" },
+  { value: "food", label: "Food & Drink" },
+  { value: "charity", label: "Charity" }
+];
 
-export default function CTXEventTickets() {
+export default function CTXEventTicketsPage() {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedDate, setSelectedDate] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const [events, setEvents] = useState(mockEvents);
+
+  useEffect(() => {
+    const fetchRandomImages = async () => {
+      try {
+        const updatedEvents = await Promise.all(
+          events.map(async (event) => {
+            try {
+              const response = await fetch(
+                `https://api.unsplash.com/photos/random?query=${encodeURIComponent(event.searchQuery)}&orientation=landscape`,
+                {
+                  headers: {
+                    Authorization: `Client-ID ${UNSPLASH_ACCESS_KEY}`
+                  }
+                }
+              );
+
+              if (!response.ok) {
+                throw new Error('Failed to fetch image');
+              }
+
+              const data = await response.json();
+              return {
+                ...event,
+                imageUrl: data.urls.regular,
+                imageCredit: {
+                  name: data.user.name,
+                  link: data.user.links.html
+                }
+              };
+            } catch (error) {
+              console.error(`Error fetching image for event ${event.id}:`, error);
+              return {
+                ...event,
+                imageUrl: 'https://placehold.co/600x400?text=' + encodeURIComponent(event.title)
+              };
+            }
+          })
+        );
+
+        setEvents(updatedEvents);
+      } catch (error) {
+        console.error('Error fetching images:', error);
+      }
+    };
+
+    fetchRandomImages();
+  }, []); // Only run once on component mount
+
+  const filteredEvents = events.filter(event => {
+    if (selectedCategory && selectedCategory.value !== 'all') {
+      if (event.category.toLowerCase() !== selectedCategory.value) {
+        return false;
+      }
+    }
+    if (searchQuery) {
+      const query = searchQuery.toLowerCase();
+      return (
+        event.title.toLowerCase().includes(query) ||
+        event.location.toLowerCase().includes(query) ||
+        event.category.toLowerCase().includes(query)
+      );
+    }
+    return true;
+  });
 
   return (
     <>
       <Helmet>
-        <title>Find Events - ConnecXit</title>
+        <title>Events - ConnecXit</title>
         <meta
           name="description"
-          content="Discover amazing events near you. Buy tickets to music concerts, food festivals, tech conferences, and more on ConnecXit."
+          content="Browse and purchase tickets for upcoming professional events."
         />
       </Helmet>
-
-      <div className="min-h-screen flex flex-col bg-white-a700">
-        <Header />
+      <div className="flex flex-col min-h-screen bg-gray-50">
+        <Header className="bg-white shadow-sm" />
         
-        {/* Hero Section */}
-        <section className="bg-gradient-to-r from-deep_orange-500 to-red-a700 py-16 px-4">
-          <div className="max-w-7xl mx-auto text-center">
-            <h1 className="text-[40px] md:text-[48px] lg:text-[56px] font-bold text-white mb-6">
-              Find your next event
-            </h1>
+        <main className="flex-grow container mx-auto px-4 py-8">
+          <div className="mb-8">
+            <h1 className="text-3xl font-bold text-gray-900 mb-6">Upcoming Events</h1>
             
-            {/* Search Bar */}
-            <div className="max-w-3xl mx-auto bg-white rounded-lg p-4 shadow-lg">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="flex flex-wrap gap-4 mb-6">
+              <div className="w-full md:w-64">
+                <Select
+                  options={categories}
+                  value={selectedCategory}
+                  onChange={setSelectedCategory}
+                  placeholder="Select Category"
+                  className="text-sm"
+                />
+              </div>
+              
+              <div className="w-full md:w-64">
                 <input
                   type="text"
                   placeholder="Search events..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:border-deep_orange-500"
-                />
-                <Select
-                  options={categories}
-                  value={selectedCategory}
-                  onChange={setSelectedCategory}
-                  placeholder="Category"
-                  styles={customSelectStyles}
-                  className="w-full"
-                />
-                <Select
-                  options={dateOptions}
-                  value={selectedDate}
-                  onChange={setSelectedDate}
-                  placeholder="Date"
-                  styles={customSelectStyles}
-                  className="w-full"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-deep_orange-500"
                 />
               </div>
-              <Button size="3" variant="solid" color="orange" className="mt-4 w-full md:w-auto">
-                Search Events
-              </Button>
             </div>
           </div>
-        </section>
 
-        {/* Events Section */}
-        <section className="py-12 px-4">
-          <div className="max-w-7xl mx-auto">
-            <h2 className="text-[24px] md:text-[28px] font-semibold mb-8 text-gray-900">
-              Popular Events
-            </h2>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {mockEvents.map((event) => (
-                <div key={event.id} className="flex flex-col rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow">
-                  <div className="relative pb-[56.25%]">
-                    <img
-                      src={event.image}
-                      alt={event.title}
-                      className="absolute inset-0 w-full h-full object-cover"
-                    />
-                  </div>
-                  <div className="p-4 flex flex-col flex-1">
-                    <span className="text-deep_orange-500 text-sm font-medium mb-2">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredEvents.map((event) => (
+              <div
+                key={event.id}
+                className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-all duration-300"
+              >
+                <div className="relative aspect-w-16 aspect-h-9">
+                  <img
+                    src={event.imageUrl}
+                    alt={event.title}
+                    className="w-full h-48 object-cover"
+                  />
+                  {event.imageCredit && (
+                    <a
+                      href={event.imageCredit.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="absolute bottom-2 right-2 text-xs text-white bg-black bg-opacity-50 px-2 py-1 rounded"
+                    >
+                      Photo by {event.imageCredit.name}
+                    </a>
+                  )}
+                  <div className="absolute top-2 left-2">
+                    <span className="inline-block bg-deep_orange-500 text-white text-xs px-2 py-1 rounded">
                       {event.category}
-                    </span>
-                    <h3 className="text-[18px] font-semibold mb-2 text-gray-900">
-                      {event.title}
-                    </h3>
-                    <span className="text-gray-600 text-sm mb-1">
-                      {event.date}
-                    </span>
-                    <span className="text-gray-600 text-sm mb-4">
-                      {event.location}
-                    </span>
-                    <span className="text-gray-900 font-medium mt-auto">
-                      {event.price}
                     </span>
                   </div>
                 </div>
-              ))}
-            </div>
-
-            <div className="text-center mt-12">
-              <Button variant="outline" color="orange" size="3">
-                Load More Events
-              </Button>
-            </div>
+                
+                <div className="p-4">
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                    {event.title}
+                  </h3>
+                  <div className="space-y-2 text-gray-600 text-sm">
+                    <p className="flex items-center">
+                      <span className="material-icons text-gray-400 mr-2 text-base">
+                        calendar_today
+                      </span>
+                      {event.date}
+                    </p>
+                    <p className="flex items-center">
+                      <span className="material-icons text-gray-400 mr-2 text-base">
+                        location_on
+                      </span>
+                      {event.location}
+                    </p>
+                    <p className="text-xl font-bold text-deep_orange-500 mt-4">
+                      {event.price}
+                    </p>
+                  </div>
+                  
+                  <Button
+                    variant="filled"
+                    className="w-full mt-4 bg-deep_orange-500 hover:bg-deep_orange-600 text-white py-2 rounded-md transition-colors"
+                  >
+                    Get Tickets
+                  </Button>
+                </div>
+              </div>
+            ))}
           </div>
-        </section>
+        </main>
 
-        {/* Categories Section */}
-        <section className="py-12 px-4 bg-gray-50">
-          <div className="max-w-7xl mx-auto">
-            <h2 className="text-[24px] md:text-[28px] font-semibold mb-8 text-gray-900">
-              Browse by Category
-            </h2>
-
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {categories.slice(1).map((category) => (
-                <Button
-                  key={category.value}
-                  variant="surface"
-                  size="3"
-                  className="h-auto py-6 w-full"
-                >
-                  {category.label}
-                </Button>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <Footer5 className="mt-auto" />
+        <Footer31 className="mt-auto" />
       </div>
     </>
   );

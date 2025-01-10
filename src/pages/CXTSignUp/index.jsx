@@ -1,205 +1,296 @@
+import React, { useState } from "react";
 import { Helmet } from "react-helmet";
-import { Button, Img, Text, Heading, Input } from "../../components";
+import { Button, Img, Input, Text, Heading } from "../../components";
 import Footer31 from "../../components/Footer31";
-import Header from "../../components/Header";
-import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useGoogleLogin } from '@react-oauth/google';
 
 export default function CXTSignUpPage() {
   const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phoneNumber: '',
+    password: '',
+    confirmPassword: '',
+  });
+  const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState(null);
+
+  const validatePassword = (password) => {
+    const requirements = {
+      length: password.length >= 8,
+      lowercase: /[a-z]/.test(password),
+      uppercase: /[A-Z]/.test(password),
+      number: /\d/.test(password),
+      special: /[^a-zA-Z0-9]/.test(password),
+    };
+    return requirements;
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+    
+    if (!formData.firstName.trim()) {
+      newErrors.firstName = 'First name is required';
+    }
+    
+    if (!formData.lastName.trim()) {
+      newErrors.lastName = 'Last name is required';
+    }
+    
+    if (!formData.email.trim()) {
+      newErrors.email = 'Email is required';
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = 'Email is invalid';
+    }
+    
+    if (!formData.password) {
+      newErrors.password = 'Password is required';
+    } else {
+      const passwordReqs = validatePassword(formData.password);
+      if (!Object.values(passwordReqs).every(Boolean)) {
+        newErrors.password = 'Password must include lowercase, uppercase, number, and special character';
+      }
+    }
+    
+    if (formData.password !== formData.confirmPassword) {
+      newErrors.confirmPassword = 'Passwords do not match';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+    
+    // Clear error for this field when user starts typing
+    if (errors[name]) {
+      setErrors(prev => ({
+        ...prev,
+        [name]: ''
+      }));
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    if (!validateForm()) {
+      return;
+    }
+
+    setLoading(true);
+    setMessage(null);
+    setErrors({});
+
+    try {
+      const response = await fetch('http://localhost:3005/api/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: formData.email,
+          password: formData.password,
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          phoneNumber: formData.phoneNumber,
+        }),
+        credentials: 'include'
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setMessage({ type: 'success', text: data.message });
+        // Clear form
+        setFormData({
+          firstName: '',
+          lastName: '',
+          email: '',
+          phoneNumber: '',
+          password: '',
+          confirmPassword: '',
+        });
+        // Redirect to login after 3 seconds
+        setTimeout(() => {
+          navigate('/login');
+        }, 3000);
+      } else {
+        if (data.errors) {
+          // Handle validation errors
+          const newErrors = {};
+          data.errors.forEach(error => {
+            newErrors[error.path] = error.msg;
+          });
+          setErrors(newErrors);
+          setMessage({ type: 'error', text: 'Please fix the validation errors below.' });
+        } else {
+          setMessage({ type: 'error', text: data.message || 'Registration failed. Please try again.' });
+        }
+      }
+    } catch (error) {
+      console.error('Registration error:', error);
+      setMessage({ type: 'error', text: 'An error occurred during registration. Please try again later.' });
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <>
       <Helmet>
-        <title>Sign Up - Create Your New Account</title>
+        <title>Sign Up - ConnecXit</title>
         <meta
           name="description"
-          content="Create your account to join as an Event Pro or Vendor. Discover a world of opportunities and partnerships. Sign up easily with just a few clicks."
+          content="Create your ConnecXit account to start connecting with event planners and service providers."
         />
       </Helmet>
       <div className="flex w-full flex-col items-center gap-[90px] bg-white-a700 md:gap-[67px] sm:gap-[45px]">
-        <Header className="sticky top-0 z-50 bg-white-a700 shadow-sm w-full" />
-        <div className="flex w-[36%] flex-col items-center gap-3.5 md:w-full md:px-5">
+        <div className="flex w-[36%] flex-col items-center gap-6 md:w-full md:px-5">
           <Heading
             size="heading3xl"
             as="h1"
             className="text-[30px] font-semibold tracking-[-1.20px] text-black-900_02 md:text-[28px] sm:text-[26px]"
           >
-            <span className="text-black-900_02">Create your&nbsp;</span>
-            <span className="text-deep_orange-500">account</span>
+            Create an Account
           </Heading>
-          <div className="self-stretch rounded-[10px] border border-solid border-gray-600_01 bg-white-a700 px-4 py-[22px] sm:py-5">
+          <form onSubmit={handleSubmit} className="self-stretch rounded-[10px] border border-solid border-gray-600_01 bg-white-a700 px-4 py-[22px] sm:py-5">
             <div className="ml-2 mt-5 flex flex-col items-start md:ml-0">
+              {message && (
+                <div className={`mb-4 w-full rounded p-3 ${message.type === 'success' ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600'}`}>
+                  {message.text}
+                </div>
+              )}
               <div className="mr-1.5 flex items-center gap-2 self-stretch md:mr-0 sm:flex-col">
-                <div className="flex w-full flex-col items-start gap-1 sm:w-full">
+                <div className="flex flex-1 flex-col items-start gap-1">
                   <Text as="p" className="text-[13px] font-normal tracking-[-0.40px] text-black-900_02">
                     First Name
                   </Text>
-                  <Input 
-                    shape="square" 
+                  <Input
+                    shape="square"
                     size="md"
-                    name="First Name Input" 
-                    className="w-full h-[36px] !border" 
+                    type="text"
+                    name="firstName"
+                    value={formData.firstName}
+                    onChange={handleInputChange}
+                    required
+                    className={`w-full h-[36px] !border ${errors.firstName ? '!border-red-500' : ''}`}
                   />
+                  {errors.firstName && (
+                    <Text className="mt-1 text-xs text-red-500">{errors.firstName}</Text>
+                  )}
                 </div>
-                <div className="flex w-full flex-col items-start gap-0.5 sm:w-full">
+                <div className="flex flex-1 flex-col items-start gap-1">
                   <Text as="p" className="text-[13px] font-normal tracking-[-0.40px] text-black-900_02">
                     Last Name
                   </Text>
-                  <Input 
-                    shape="square" 
+                  <Input
+                    shape="square"
                     size="md"
-                    name="Last Name Input" 
-                    className="w-full h-[36px] !border" 
+                    type="text"
+                    name="lastName"
+                    value={formData.lastName}
+                    onChange={handleInputChange}
+                    required
+                    className={`w-full h-[36px] !border ${errors.lastName ? '!border-red-500' : ''}`}
                   />
+                  {errors.lastName && (
+                    <Text className="mt-1 text-xs text-red-500">{errors.lastName}</Text>
+                  )}
                 </div>
               </div>
               <div className="mr-1.5 mt-6 flex flex-col items-start gap-1 self-stretch md:mr-0">
                 <Text as="p" className="text-[13px] font-normal tracking-[-0.40px] text-black-900_02">
                   Email
                 </Text>
+                <Input
+                  shape="square"
+                  size="md"
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  required
+                  className={`w-full h-[36px] !border ${errors.email ? '!border-red-500' : ''}`}
+                />
+                {errors.email && (
+                  <Text className="mt-1 text-xs text-red-500">{errors.email}</Text>
+                )}
+              </div>
+              <div className="mr-1.5 mt-6 flex flex-col items-start gap-1 self-stretch md:mr-0">
+                <Text as="p" className="text-[13px] font-normal tracking-[-0.40px] text-black-900_02">
+                  Phone Number
+                </Text>
                 <Input 
                   shape="square" 
                   size="md"
-                  name="Email Input" 
-                  className="w-full h-[36px] !border" 
+                  type="tel"
+                  name="phoneNumber"
+                  value={formData.phoneNumber}
+                  onChange={handleInputChange}
+                  className={`w-full h-[36px] !border ${errors.phoneNumber ? '!border-red-500' : ''}`}
                 />
+                {errors.phoneNumber && (
+                  <Text className="mt-1 text-xs text-red-500">{errors.phoneNumber}</Text>
+                )}
               </div>
               <div className="mr-1.5 mt-6 flex flex-col items-start gap-1 self-stretch md:mr-0">
                 <Text as="p" className="text-[13px] font-normal tracking-[-0.40px] text-black-900_02">
                   Password
                 </Text>
-                <Input 
-                  shape="square" 
+                <Input
+                  shape="square"
                   size="md"
-                  name="Password Input" 
-                  className="w-full h-[36px] !border" 
+                  type="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleInputChange}
+                  required
+                  className={`w-full h-[36px] !border ${errors.password ? '!border-red-500' : ''}`}
                 />
+                {errors.password && (
+                  <Text className="mt-1 text-xs text-red-500">{errors.password}</Text>
+                )}
               </div>
-              <Text size="textlg" as="p" className="mt-3.5 text-[14px] font-normal tracking-[-0.56px] text-gray-500_03">
-                Your password must:
-              </Text>
-              <div className="mt-1.5 flex items-center gap-[11px] self-stretch">
-                <div className="h-[6px] w-[6px] rounded-[3px] bg-gray-600" />
-                <Text size="textlg" as="p" className="text-[14px] font-normal tracking-[-0.56px] text-gray-500_03">
-                  be 8 to 71 characters long
+              <div className="mr-1.5 mt-6 flex flex-col items-start gap-1 self-stretch md:mr-0">
+                <Text as="p" className="text-[13px] font-normal tracking-[-0.40px] text-black-900_02">
+                  Confirm Password
                 </Text>
+                <Input
+                  shape="square"
+                  size="md"
+                  type="password"
+                  name="confirmPassword"
+                  value={formData.confirmPassword}
+                  onChange={handleInputChange}
+                  required
+                  className={`w-full h-[36px] !border ${errors.confirmPassword ? '!border-red-500' : ''}`}
+                />
+                {errors.confirmPassword && (
+                  <Text className="mt-1 text-xs text-red-500">{errors.confirmPassword}</Text>
+                )}
               </div>
-              <div className="mt-1 flex items-center gap-[11px] self-stretch">
-                <div className="h-[6px] w-[6px] rounded-[3px] bg-gray-600" />
-                <Text size="textlg" as="p" className="text-[14px] font-normal tracking-[-0.56px] text-gray-500_03">
-                  not contain your name or email
-                </Text>
-              </div>
-              <div className="relative mr-1.5 mt-1 h-[108px] self-stretch md:mr-0">
-                <Text
-                  size="textlg"
-                  as="p"
-                  className="absolute left-0 right-0 top-0 m-auto w-[96%] text-[14px] font-normal leading-[144.7%] tracking-[-0.56px] text-gray-500_03"
-                >
-                  not be commonly used, easily guessed or contain any variation of the word “Thumbtak”
-                </Text>
-                <Text
-                  size="textlg"
-                  as="p"
-                  className="absolute bottom-0 left-0 right-0 m-auto w-[96%] text-[14px] font-normal leading-[144.7%] tracking-[-0.56px] text-gray-800"
-                >
-                  <span className="text-gray-800">By clicking Create Account, you agree to the</span>
-                  <span className="text-green-800">&nbsp;</span>
-                  <span className="text-deep_orange-500">Terms of Use</span>
-                  <span className="text-gray-800">&nbsp;and&nbsp;</span>
-                  <span className="text-deep_orange-500">Privacy Policy.</span>
-                </Text>
-                <div className="absolute left-0 top-2 m-auto h-[6px] w-[6px] rounded-[3px] bg-gray-600" />
-              </div>
-              <div className="relative mx-1 mt-3.5 h-[36px] content-end self-stretch md:mx-0 md:h-auto">
-                <a href="#" className="mx-auto">
-                  <Heading
-                    size="headings"
-                    as="h2"
-                    className="text-[14px] font-semibold tracking-[-0.56px] text-white-a700"
-                  >
-                    Create Account
-                  </Heading>
-                </a>
-                <a href="https://www.youtube.com/embed/bv8Fxk0sz7I" target="_blank">
-                  <Button
-                    size="lg"
-                    shape="round"
-                    className="absolute bottom-0 left-0 right-0 top-0 m-auto flex-1 rounded-lg px-[34px] font-semibold tracking-[-0.56px] sm:px-5"
-                  >
-                    Create Account
-                  </Button>
-                </a>
-              </div>
-              <div className="mr-1.5 mt-[22px] flex items-center self-stretch md:mr-0 sm:flex-col">
-                <div className="h-px flex-1 bg-gray-500_02 sm:self-stretch" />
-                <Text
-                  size="textlg"
-                  as="p"
-                  className="ml-[18px] text-[14px] font-normal tracking-[-0.56px] text-gray-800 sm:ml-0"
-                >
-                  Or
-                </Text>
-                <div className="ml-6 h-px flex-1 bg-gray-500_02 sm:ml-0 sm:self-stretch" />
-              </div>
-              <div className="mt-7 self-stretch">
-                <div className="flex flex-col gap-5">
-                  <div className="flex flex-col gap-3">
-                    <Text
-                      size="textlg"
-                      as="p"
-                      className="text-[14px] font-normal leading-[144.7%] tracking-[-0.56px] text-gray-800 mb-4"
-                    >
-                      <span className="text-gray-800">By clicking Sign up with Facebook or Sign up with </span>
-                      <span className="text-deep_orange-500">Google</span>
-                      <span className="text-gray-800"> you agree to the </span>
-                      <span className="text-deep_orange-500">Terms of Use</span>
-                      <span className="text-gray-800"> and </span>
-                      <span className="text-deep_orange-500">Privacy Policy.</span>
-                    </Text>
-                    
-                    <Button
-                      color="gray_500"
-                      size="lg"
-                      variant="outline"
-                      shape="square"
-                      leftIcon={
-                        <Img
-                          src="images/img_facebook_svgrepo_com.svg"
-                          alt="Facebook Logo"
-                          className="h-[16px] w-[16px]"
-                        />
-                      }
-                      className="gap-3 self-stretch !border px-[33px] tracking-[-0.56px] sm:px-5"
-                    >
-                      Sign up with Facebook
-                    </Button>
-                  </div>
-
-                  <Button
-                    color="gray_500"
-                    size="lg"
-                    variant="outline"
-                    shape="square"
-                    leftIcon={
-                      <Img
-                        src="images/img_googleiconlogosvgrepocom_1.svg"
-                        alt="Google-icon-logo-svgrepo-com 1"
-                        className="mb-1 h-[14px] w-[14px]"
-                      />
-                    }
-                    className="gap-3 self-stretch !border px-[33px] tracking-[-0.56px] sm:px-5"
-                  >
-                    Sign up with Google
-                  </Button>
-                </div>
-              </div>
+              <Button
+                type="submit"
+                size="lg"
+                shape="round"
+                disabled={loading}
+                className="mt-6 w-full rounded-lg px-[34px] font-semibold tracking-[-0.56px] sm:px-5 disabled:opacity-50"
+              >
+                {loading ? 'Creating Account...' : 'Create Account'}
+              </Button>
             </div>
-          </div>
+          </form>
         </div>
-        <Footer31 />
+        <Footer31 className="bg-white-a700 flex items-center justify-center md:px-5 w-full" />
       </div>
     </>
   );

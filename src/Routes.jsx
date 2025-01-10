@@ -23,6 +23,7 @@ import CXTDetailPage from "pages/CXTDetailPage";
 import Search from "pages/Search";
 import ResultList from "pages/ResultList";
 import CXTInbox from "pages/CXTInbox";
+import AdminPage from "pages/admin";
 
 const ProjectRoutes = () => {
   let element = useRoutes([
@@ -111,6 +112,10 @@ const ProjectRoutes = () => {
     {
       path: "cxtinbox",
       element: <CXTInbox />,
+    },
+    {
+      path: "admin",
+      element: <AdminPage />,
     },
   ]);
 

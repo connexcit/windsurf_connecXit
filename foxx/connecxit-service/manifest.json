@@ -1,0 +1,20 @@
+{
+  "name": "connecxit-service",
+  "version": "1.0.0",
+  "description": "ConnecXit Service Provider Search API",
+  "engines": {
+    "arangodb": "^3.0.0"
+  },
+  "main": "index.js",
+  "scripts": {
+    "setup": "scripts/setup.js",
+    "teardown": "scripts/teardown.js"
+  },
+  "configuration": {
+    "maxDistance": {
+      "description": "Maximum distance in meters for geo queries",
+      "type": "integer",
+      "default": 50000
+    }
+  }
+}

@@ -2,6 +2,7 @@ import React from "react";
 import { Helmet } from "react-helmet";
 import Header from "../../components/Header";
 import { useNavigate } from "react-router-dom";
+import Map from "../../components/Map";
 
 export default function CXTDetailPagePage() {
   const chefData = {
@@ -27,7 +28,11 @@ export default function CXTDetailPagePage() {
       "Certified Professional Chef",
       "Food Safety Certified",
       "ServSafe Manager Certified"
-    ]
+    ],
+    location: {
+      lat: 40.7128,
+      lng: -74.0060
+    }
   };
 
   const navigate = useNavigate();
@@ -143,6 +148,24 @@ export default function CXTDetailPagePage() {
                       <span>{service}</span>
                     </div>
                   ))}
+                </div>
+              </section>
+
+              {/* Map Section */}
+              <section className="bg-white rounded-lg p-6">
+                <h2 className="text-xl font-semibold mb-4">Location</h2>
+                <div className="relative">
+                  {chefData.location && (
+                    <Map 
+                      center={[chefData.location.lat, chefData.location.lng]} 
+                      markers={[
+                        {
+                          position: [chefData.location.lat, chefData.location.lng],
+                          popup: chefData.name
+                        }
+                      ]}
+                    />
+                  )}
                 </div>
               </section>
 

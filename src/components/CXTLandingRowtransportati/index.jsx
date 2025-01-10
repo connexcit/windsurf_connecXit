@@ -1,4 +1,4 @@
-import { Heading, Img } from "./..";
+import { Heading, Img } from "../../components";
 import React, { Suspense } from "react";
 
 const cardList = [

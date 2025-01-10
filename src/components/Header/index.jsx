@@ -29,6 +29,10 @@ export default function Header({ ...props }) {
 
       {/* Navigation Links */}
       <div className="flex flex-1 max-w-[894px] items-center justify-end gap-6 md:gap-4 md:flex-col">
+        {/* Map Link */}
+        <Link to="/service-providers" className="text-gray-800 hover:text-deep_orange-500 font-medium">
+          Map
+        </Link>
         {/* Action Buttons */}
         <div className="flex gap-3 md:gap-2 md:flex-wrap sm:flex-col">
           <Link to="/ctxeventtickets">

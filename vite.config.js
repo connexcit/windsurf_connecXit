@@ -9,5 +9,23 @@ export default defineConfig({
   build: {
     outDir: "build",
   },
-  plugins: [tsconfigPaths(), react()],
+  plugins: [
+    react({
+      jsxRuntime: 'classic',
+      babel: {
+        plugins: [
+          ['@babel/plugin-transform-react-jsx', { runtime: 'classic' }]
+        ]
+      }
+    }), 
+    tsconfigPaths()
+  ],
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3005',
+        changeOrigin: true,
+      },
+    },
+  },
 });
