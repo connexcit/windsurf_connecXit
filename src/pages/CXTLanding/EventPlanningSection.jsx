@@ -1,4 +1,4 @@
-import { Button, Img, Text, Heading } from "../../components";
+import { Button, Heading } from "../../components";
 import UserProfile from "../../components/UserProfile";
 import React, { useState, Suspense, useEffect } from "react";
 import { useNavigate } from "react-router-dom";

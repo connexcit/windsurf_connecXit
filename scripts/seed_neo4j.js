@@ -1,96 +1,88 @@
-require('dotenv').config();
-const neo4j = require('neo4j-driver');
+const { getSession } = require('../src/config/neo4j');
 const fs = require('fs');
-const csv = require('csv-parse');
+const { parse } = require('csv-parse/sync');
 
-// Initialize Neo4j driver
-const driver = neo4j.driver(
-  process.env.NEO4J_URI,
-  neo4j.auth.basic(process.env.NEO4J_USER, process.env.NEO4J_PASSWORD)
-);
+// Constants
+const VENDOR_CATEGORIES = {
+  'Catering': ['Food Service', 'Beverage Service'],
+  'Photography': ['Event Photography', 'Portrait Photography'],
+  'Venue': ['Indoor Venues', 'Outdoor Venues'],
+  'Entertainment': ['Live Music', 'DJ Services'],
+  'Decor': ['Floral Design', 'Event Design'],
+  'Planning': ['Full Service', 'Day-of Coordination']
+};
+
+const RECORD_COUNT = 50;
 
 async function seedDatabase() {
-  const session = driver.session();
-
+  const session = getSession();
+  
   try {
     // Clear existing data
     await session.run('MATCH (n) DETACH DELETE n');
-    console.log('Cleared existing data');
 
-    // Read CSV file
-    const csvPath = './src/misc/Connexit_list_unDpulicated.csv';
-    const fileContent = fs.readFileSync(csvPath, 'utf-8');
-    
-    // Parse CSV
-    const records = await new Promise((resolve, reject) => {
-      csv.parse(fileContent, {
-        columns: true,
-        skip_empty_lines: true
-      }, (err, records) => {
-        if (err) reject(err);
-        else resolve(records);
-      });
-    });
+    // Create category nodes first
+    for (const [category, subcategories] of Object.entries(VENDOR_CATEGORIES)) {
+      await session.run(
+        'CREATE (c:Category {name: $category, subcategories: $subcategories})',
+        { category, subcategories }
+      );
+    }
 
-    console.log(`Found ${records.length} records in CSV`);
-
-    // Create vendors
-    for (const record of records) {
-      const query = `
-        CREATE (v:vendors {
-          name: $business_name,
+    // Create vendor nodes and relationships
+    for (let i = 0; i < RECORD_COUNT; i++) {
+      const category = Object.keys(VENDOR_CATEGORIES)[Math.floor(Math.random() * Object.keys(VENDOR_CATEGORIES).length)];
+      const seed = `vendor-${i}-${category.replace(/[^a-zA-Z0-9]/g, '')}`;
+      const imageKeywords = [
+        'business headshot',
+        'professional portrait',
+        'corporate headshot',
+        'professional profile',
+        'business profile'
+      ];
+      const randomKeyword = imageKeywords[Math.floor(seed.charCodeAt(0) % imageKeywords.length)];
+      
+      await session.run(
+        `
+        MATCH (c:Category {name: $category})
+        CREATE (v:Vendor {
+          id: $id,
+          name: $name,
           category: $category,
           description: $description,
           rating: $rating,
           reviewCount: $reviewCount,
           price: $price,
-          location: $location,
-          imageUrl: $imageUrl
+          imageUrl: $imageUrl,
+          contactEmail: $contactEmail,
+          contactPhone: $contactPhone,
+          location: point({latitude: $lat, longitude: $lng})
         })
-      `;
-
-      const params = {
-        business_name: record.business_name ? record.business_name.trim() : 'Unknown Vendor',
-        category: record.category_title ? record.category_title.trim() : 'Uncategorized',
-        description: `${record.business_name || 'Unknown Vendor'} is a ${record.category_title || 'service provider'} serving ${record.city || 'the local'} area.`,
-        rating: (Math.random() * 2 + 3).toFixed(1), // Random rating between 3.0 and 5.0
-        reviewCount: Math.floor(Math.random() * 100) + 1, // Random number of reviews between 1 and 100
-        price: Math.floor(Math.random() * 200) + 50, // Random price between 50 and 250
-        location: record.city && record.state ? `${record.city}, ${record.state}` : 'Location not specified',
-        imageUrl: `https://source.unsplash.com/random/400x300/?${encodeURIComponent((record.category_title || 'business').toLowerCase())}`
-      };
-
-      await session.run(query, params);
+        CREATE (v)-[:BELONGS_TO]->(c)
+        `,
+        {
+          id: `vendor_${i}`,
+          name: `Vendor ${i}`,
+          category: category,
+          description: `Professional ${category.toLowerCase()} service provider`,
+          rating: (Math.random() * 1.5 + 3.5).toFixed(1),
+          reviewCount: Math.floor(Math.random() * 50) + 10,
+          price: (Math.floor(Math.random() * 3) + 1) * 100,
+          imageUrl: `https://source.unsplash.com/featured/?${encodeURIComponent(randomKeyword)}&${seed}`,
+          contactEmail: `vendor${i}@example.com`,
+          contactPhone: `(919) ${Math.floor(Math.random() * 900 + 100)}-${Math.floor(Math.random() * 9000 + 1000)}`,
+          lat: 35.7796 + (Math.random() - 0.5) * 0.1,
+          lng: -78.6382 + (Math.random() - 0.5) * 0.1
+        }
+      );
     }
 
-    console.log('Created vendors');
-
-    // Create indexes
-    await session.run('CREATE INDEX vendor_name IF NOT EXISTS FOR (v:vendors) ON (v.name)');
-    await session.run('CREATE INDEX vendor_category IF NOT EXISTS FOR (v:vendors) ON (v.category)');
-
-    console.log('Created indexes');
-
-    // Verify data
-    const result = await session.run('MATCH (v:vendors) RETURN count(v) as count');
-    console.log(`Seeded ${result.records[0].get('count')} vendors`);
-
+    console.log('Database seeded successfully!');
   } catch (error) {
     console.error('Error seeding database:', error);
-    throw error;
   } finally {
     await session.close();
-    await driver.close();
   }
 }
 
-// Run the seeding
-seedDatabase()
-  .then(() => {
-    console.log('Database seeded successfully');
-    process.exit(0);
-  })
-  .catch(error => {
-    console.error('Failed to seed database:', error);
-    process.exit(1);
-  });
+seedDatabase();

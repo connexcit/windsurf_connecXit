@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Helmet } from "react-helmet";
-import { Text, Heading, Img, Button } from "../../components";
+import { Text, Heading, Button, Img } from "../../components";
 import Header from "../../components/Header";
 import { useNavigate } from "react-router-dom";
 
@@ -77,11 +77,7 @@ export default function CXTListPagePage() {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const navigate = useNavigate();
 
-  useEffect(() => {
-    fetchVendors();
-  }, [selectedCategory]);
-
-  const fetchVendors = async () => {
+  const fetchVendors = useCallback(async () => {
     try {
       const url = selectedCategory === 'all' 
         ? '/api/vendors'
@@ -89,19 +85,24 @@ export default function CXTListPagePage() {
       
       console.log('Fetching vendors from:', url);
       const response = await fetch(url);
+
       if (!response.ok) {
-        throw new Error('Failed to fetch vendors');
+        throw new Error('Network response was not ok');
       }
+
       const data = await response.json();
-      console.log('Received vendors data:', data);
       setVendors(data);
-    } catch (err) {
-      console.error('Error fetching vendors:', err);
-      setError(err.message);
+    } catch (error) {
+      console.error('Error fetching vendors:', error);
+      setError(error.message);
     } finally {
       setLoading(false);
     }
-  };
+  }, [selectedCategory]);
+
+  useEffect(() => {
+    fetchVendors();
+  }, [selectedCategory, fetchVendors]);
 
   const handleVendorClick = (vendor) => {
     console.log('Clicked vendor:', vendor);
@@ -207,7 +208,7 @@ export default function CXTListPagePage() {
                     responseTime="Typically responds in 24 hours"
                     startingPrice={vendor.price || 100}
                     testimonial={vendor.description || 'No description available'}
-                    imageUrl={vendor.imageUrl || `https://source.unsplash.com/random/400x300/?${encodeURIComponent(vendor.category || 'business')}`}
+                    imageUrl={vendor.imageUrl || `https://source.unsplash.com/featured/?${encodeURIComponent(vendor.category?.toLowerCase() || 'business')},professional`}
                     onClick={() => handleVendorClick(vendor)}
                   />
                 );

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Helmet } from "react-helmet";
-import { Button, Img, Input, Text, Heading } from "../../components";
+import { Button, Input, Text, Heading } from "../../components";
 import Footer31 from "../../components/Footer31";
 import { useNavigate } from "react-router-dom";
 

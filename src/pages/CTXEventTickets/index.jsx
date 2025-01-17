@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Helmet } from "react-helmet";
-import { Button, Img, Text } from "../../components";
+import { Button } from "../../components";
 import Footer31 from "../../components/Footer31";
 import Header from "../../components/Header";
 import Select from "react-select";
 
-const UNSPLASH_ACCESS_KEY = import.meta.env.VITE_UNSPLASH_ACCESS_KEY;
+const UNSPLASH_ACCESS_KEY = process.env.REACT_APP_UNSPLASH_ACCESS_KEY;
 
 const mockEvents = [
   {
@@ -56,7 +56,6 @@ const categories = [
 
 export default function CTXEventTicketsPage() {
   const [selectedCategory, setSelectedCategory] = useState(null);
-  const [selectedDate, setSelectedDate] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [events, setEvents] = useState(mockEvents);
 
@@ -105,7 +104,7 @@ export default function CTXEventTicketsPage() {
     };
 
     fetchRandomImages();
-  }, []); // Only run once on component mount
+  }, [events]); // Only run once on component mount
 
   const filteredEvents = events.filter(event => {
     if (selectedCategory && selectedCategory.value !== 'all') {

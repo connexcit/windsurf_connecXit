@@ -109,7 +109,8 @@ for (let i = 0; i < RECORD_COUNT; i++) {
     contact: {
       email: `vendor${i}@example.com`,
       phone: `(919) ${Math.floor(Math.random() * 900 + 100)}-${Math.floor(Math.random() * 9000 + 1000)}`
-    }
+    },
+    imageUrl: `https://source.unsplash.com/featured/?${encodeURIComponent(category.toLowerCase())},business`
   });
 }
 

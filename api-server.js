@@ -10,8 +10,11 @@ const rateLimit = require('express-rate-limit');
 const { body, validationResult } = require('express-validator');
 const nodemailer = require('nodemailer');
 require('dotenv').config();
+const { driver } = require('./src/config/neo4j');
 
 const app = express();
+
+const port = process.env.PORT || 3005;
 
 // CORS configuration
 app.use(cors({
@@ -32,15 +35,6 @@ app.use(limiter);
 
 // JWT secret
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
-
-// Neo4j driver setup
-const driver = neo4j.driver(
-  process.env.NEO4J_URI || 'bolt://localhost:7687',
-  neo4j.auth.basic(
-    process.env.NEO4J_USER || 'neo4j',
-    process.env.NEO4J_PASSWORD || 'password'
-  )
-);
 
 // Email configuration
 const transporter = nodemailer.createTransport({
@@ -322,7 +316,23 @@ app.use((req, res, next) => {
 // Use vendors router
 app.use('/api/vendors', vendorsRouter);
 
-const PORT = process.env.API_PORT || 3005;
-app.listen(PORT, () => {
-  console.log(`API Server running on port ${PORT}`);
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ 
+    error: 'Internal server error',
+    message: process.env.NODE_ENV === 'development' ? err.message : undefined
+  });
+});
+
+// Graceful shutdown
+process.on('SIGTERM', async () => {
+  console.log('SIGTERM signal received: closing HTTP server');
+  await driver.close();
+  process.exit(0);
+});
+
+// Start server
+app.listen(port, () => {
+  console.log(`API Server running on port ${port}`);
 });

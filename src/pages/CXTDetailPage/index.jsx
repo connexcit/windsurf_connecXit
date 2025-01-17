@@ -1,8 +1,8 @@
 import React from "react";
 import { Helmet } from "react-helmet";
 import Header from "../../components/Header";
-import { useNavigate, useParams } from "react-router-dom";
-import { Button, Img, Text } from "../../components";
+import { useNavigate } from "react-router-dom";
+import { Img } from "../../components";
 
 export default function CXTDetailPagePage() {
   const chefData = {
@@ -53,7 +53,7 @@ export default function CXTDetailPagePage() {
           <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
             <div className="flex flex-col md:flex-row items-start gap-6">
               <div className="w-32 h-32 flex-shrink-0">
-                <img 
+                <Img 
                   src={chefData.imageUrl} 
                   alt={chefData.name}
                   className="w-full h-full rounded-full object-cover"

@@ -1,109 +1,94 @@
 const express = require('express');
 const router = express.Router();
-const neo4j = require('neo4j-driver');
+const { getSession } = require('../config/neo4j');
 
-// Initialize Neo4j driver
-const driver = neo4j.driver(
-  process.env.NEO4J_URI,
-  neo4j.auth.basic(process.env.NEO4J_USER, process.env.NEO4J_PASSWORD)
-);
-
-// Get all vendors with optional filtering
+// Get all vendors or filter by category
 router.get('/', async (req, res) => {
-  console.log('Received request for vendors with query:', req.query);
-  const session = driver.session();
+  const session = getSession();
   const { category } = req.query;
 
   try {
-    const query = `
-      MATCH (v:vendors)
-      ${category && category !== 'all' ? 'WHERE v.category = $category' : ''}
-      RETURN {
-        _id: toString(id(v)),
-        name: v.name,
-        category: v.category,
-        description: v.description,
-        price: v.price,
-        rating: v.rating,
-        reviewCount: v.reviewCount,
-        location: v.location,
-        imageUrl: v.imageUrl
-      } as vendor
-      ORDER BY vendor.rating DESC
-      LIMIT 50
-    `;
+    let query;
+    let params = {};
 
-    console.log('Executing query:', query);
-    const result = await session.run(query, { category });
-    console.log('Query result records:', result.records.length);
+    if (category) {
+      query = `
+        MATCH (v:Vendor)-[:BELONGS_TO]->(c:Category)
+        WHERE c.name = $category
+        RETURN v
+      `;
+      params = { category };
+    } else {
+      query = `
+        MATCH (v:Vendor)
+        RETURN v
+      `;
+    }
 
+    const result = await session.run(query, params);
     const vendors = result.records.map(record => {
-      const vendor = record.get('vendor');
-      console.log('Raw vendor data:', vendor);
+      const vendor = record.get('v').properties;
       return {
         ...vendor,
-        _id: vendor._id,
         rating: parseFloat(vendor.rating || '4.5').toFixed(1),
         reviewCount: parseInt(vendor.reviewCount || Math.floor(Math.random() * 50) + 10),
-        price: parseInt(vendor.price || Math.floor(Math.random() * 3) + 1) * 100
+        price: parseInt(vendor.price || Math.floor(Math.random() * 3) + 1) * 100,
+        contact: {
+          email: vendor.contactEmail,
+          phone: vendor.contactPhone
+        },
+        location: {
+          latitude: vendor.latitude,
+          longitude: vendor.longitude
+        }
       };
     });
 
-    console.log('Sending vendors:', vendors);
     res.json(vendors);
   } catch (error) {
-    console.error('Error in /vendors route:', error);
-    res.status(500).json({ 
-      error: 'Error fetching vendors', 
-      details: error.message,
-      stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
-    });
+    console.error('Error fetching vendors:', error);
+    res.status(500).json({ error: 'Internal server error' });
   } finally {
     await session.close();
   }
 });
 
-// Get a specific vendor by ID
+// Get vendor by ID
 router.get('/:id', async (req, res) => {
-  const session = driver.session();
+  const session = getSession();
   const { id } = req.params;
 
   try {
     const query = `
-      MATCH (v:vendors)
-      WHERE toString(id(v)) = $id
-      RETURN {
-        _id: toString(id(v)),
-        name: v.name,
-        category: v.category,
-        description: v.description,
-        price: v.price,
-        rating: v.rating,
-        location: v.location,
-        imageUrl: v.imageUrl
-      } as vendor
+      MATCH (v:Vendor)
+      WHERE v.id = $id
+      RETURN v
     `;
 
     const result = await session.run(query, { id });
-    
+
     if (result.records.length === 0) {
       return res.status(404).json({ error: 'Vendor not found' });
     }
 
-    const vendor = result.records[0].get('vendor');
+    const vendor = result.records[0].get('v').properties;
     res.json({
       ...vendor,
       rating: parseFloat(vendor.rating || '4.5').toFixed(1),
       reviewCount: parseInt(vendor.reviewCount || Math.floor(Math.random() * 50) + 10),
-      price: parseInt(vendor.price || Math.floor(Math.random() * 3) + 1) * 100
+      price: parseInt(vendor.price || Math.floor(Math.random() * 3) + 1) * 100,
+      contact: {
+        email: vendor.contactEmail,
+        phone: vendor.contactPhone
+      },
+      location: {
+        latitude: vendor.latitude,
+        longitude: vendor.longitude
+      }
     });
   } catch (error) {
     console.error('Error fetching vendor details:', error);
-    res.status(500).json({ 
-      error: 'Error fetching vendor details',
-      details: error.message,
-      stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
-    });
+    res.status(500).json({ error: 'Internal server error' });
   } finally {
     await session.close();
   }
