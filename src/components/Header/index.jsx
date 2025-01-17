@@ -1,7 +1,6 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useGoogleLogin } from '@react-oauth/google';
-import { Button } from '@radix-ui/themes';
 
 export default function Header({ ...props }) {
   const navigate = useNavigate();
@@ -48,12 +47,12 @@ export default function Header({ ...props }) {
         {/* Action Buttons */}
         <div className="flex gap-3 md:gap-2 md:flex-wrap sm:flex-col">
           <Link to="/ctxeventtickets">
-            <Button size="3" variant="solid" color="red" className="whitespace-nowrap">
+            <button className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors whitespace-nowrap">
               Get Tickets
-            </Button>
+            </button>
           </Link>
           <Link to="/cxtsignup">
-            <Button size="3" variant="solid" color="orange" className="whitespace-nowrap">
+            <button className="px-4 py-2 bg-orange-500 text-white rounded-md hover:bg-orange-600 transition-colors whitespace-nowrap">
               <span className="flex items-center gap-2">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-white">
                   <path d="M19 3H5C3.89543 3 3 3.89543 3 5V19C3 20.1046 3.89543 21 5 21H19C20.1046 21 21 20.1046 21 19V5C21 3.89543 20.1046 3 19 3Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -61,21 +60,21 @@ export default function Header({ ...props }) {
                 </svg>
                 Join As An Event Pro
               </span>
-            </Button>
+            </button>
           </Link>
           <Link to="/cxtsignup">
-            <Button size="3" variant="solid" color="red" className="whitespace-nowrap">
+            <button className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors whitespace-nowrap">
               Join As A Vendor
-            </Button>
+            </button>
           </Link>
         </div>
 
         {/* Menu Items */}
         <div className="flex items-center gap-6 md:gap-4">
-          <Link to="/explore" className="text-[15px] font-medium text-gray-900 hover:text-deep_orange-500 transition-colors">
+          <Link to="/explore" className="text-[15px] font-medium text-gray-900 hover:text-orange-500 transition-colors">
             Explore
           </Link>
-          <Link to="/signup" className="text-[15px] font-medium text-gray-900 hover:text-deep_orange-500 transition-colors">
+          <Link to="/signup" className="text-[15px] font-medium text-gray-900 hover:text-orange-500 transition-colors">
             Member Sign up
           </Link>
           <button 

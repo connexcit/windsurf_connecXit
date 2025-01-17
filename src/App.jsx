@@ -13,7 +13,7 @@ import NotFound from "./pages/NotFound";
 
 function App() {
   return (
-    <GoogleOAuthProvider clientId={process.env.VITE_GOOGLE_CLIENT_ID}>
+    <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
       <React.Suspense fallback={<>Loading...</>}>
         <Router>
           <Switch>

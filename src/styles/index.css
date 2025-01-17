@@ -101,3 +101,19 @@ input:-webkit-autofill:active {
 [data-radix-select-item][data-highlighted] {
   background-color: #fff7ed !important;
 }
+
+/* Radix UI specific reset styles */
+.radix-switch-wrapper {
+  display: inline-flex;
+  align-items: center;
+}
+
+.radix-switch-root {
+  all: unset;
+  box-sizing: border-box;
+}
+
+.radix-switch-thumb {
+  display: block;
+  box-sizing: border-box;
+}
